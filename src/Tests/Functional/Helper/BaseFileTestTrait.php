@@ -16,7 +16,6 @@ namespace Evrinoma\ContactBundle\Tests\Functional\Helper;
 use Evrinoma\ContactBundle\Dto\FileApiDtoInterface;
 use Evrinoma\UtilsBundle\Model\Rest\PayloadModel;
 use PHPUnit\Framework\Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait BaseFileTestTrait
 {
