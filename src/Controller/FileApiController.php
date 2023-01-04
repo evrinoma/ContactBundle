@@ -65,7 +65,7 @@ final class FileApiController extends AbstractWrappedApiController implements Ap
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 example={
-     *                     "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
+     *                     "class": "Evrinoma\ContactBundle\Dto\FileApiDto",
      *                     "position": "0",
      *                     "title": "bla bla",
      *                     "contact": {
@@ -120,7 +120,7 @@ final class FileApiController extends AbstractWrappedApiController implements Ap
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 example={
-     *                     "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
+     *                     "class": "Evrinoma\ContactBundle\Dto\FileApiDto",
      *                     "position": "0",
      *                     "id": "1",
      *                     "active": "b",
