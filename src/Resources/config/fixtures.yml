@@ -1,0 +1,10 @@
+services:
+  evrinoma.contact.fixtures.contact:
+    class: Evrinoma\ContactBundle\Fixtures\ContactFixtures
+    tags:
+      - { name: doctrine.fixture.orm }
+
+  evrinoma.contact.fixtures.file:
+    class: Evrinoma\ContactBundle\Fixtures\FileFixtures
+    tags:
+      - { name: doctrine.fixture.orm }

@@ -1,0 +1,5 @@
+services:
+  evrinoma.contact.object_manager:
+    class:  Doctrine\Persistence\ObjectManager
+    public: false
+    arguments: ['%evrinoma.contact.model_manager_name%']

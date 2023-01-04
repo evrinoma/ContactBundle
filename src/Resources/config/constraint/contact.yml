@@ -1,0 +1,14 @@
+services:
+  evrinoma.contact.constraint.property.contact.body:
+    class: Evrinoma\ContactBundle\Constraint\Property\Contact\Body
+
+  evrinoma.contact.constraint.property.contact.title:
+    class: Evrinoma\ContactBundle\Constraint\Property\Contact\Title
+
+  evrinoma.contact.constraint.property.contact.active:
+    class: Evrinoma\ContactBundle\Constraint\Property\Contact\Active
+
+  evrinoma.contact.constraint.property.contact.position:
+    class: Evrinoma\ContactBundle\Constraint\Property\Contact\Position
+
+

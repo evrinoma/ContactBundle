@@ -1,0 +1,101 @@
+services:
+  Evrinoma\ContactBundle\Controller\ContactApiController:
+    alias: evrinoma.contact.contact.api.controller
+    public: true
+
+  evrinoma.contact.contact.api.controller:
+    class: Evrinoma\ContactBundle\Controller\ContactApiController
+    arguments:
+      - '@jms_serializer'
+      - '@request_stack'
+      - '@evrinoma.dto.factory'
+      - '@evrinoma.contact.contact.facade'
+    autowire: true
+
+  evrinoma.contact.contact.facade:
+    class: Evrinoma\ContactBundle\Facade\Contact\Facade
+    arguments:
+      - '@evrinoma.contact.contact.command.manager'
+      - '@evrinoma.contact.contact.query.manager'
+      - '@evrinoma.contact.adaptor'
+    autowire: true
+
+  Evrinoma\ContactBundle\Facade\Contact\FacadeInterface:
+    alias: evrinoma.contact.contact.facade
+
+  evrinoma.contact.contact.factory:
+    class: Evrinoma\ContactBundle\Factory\Contact\Factory
+    public: true
+    arguments:
+
+  evrinoma.contact.contact.orm.repository:
+    class: Evrinoma\ContactBundle\Repository\Orm\Contact\ContactRepository
+    public: true
+    arguments:
+
+  evrinoma.contact.contact.command.manager:
+    class: Evrinoma\ContactBundle\Manager\Contact\CommandManager
+    arguments:
+      - '@evrinoma.contact.contact.validator'
+      - '@evrinoma.contact.contact.repository'
+      - '@evrinoma.contact.contact.factory'
+      - '@evrinoma.contact.contact.command.mediator'
+
+  Evrinoma\ContactBundle\Manager\Contact\CommandManagerInterface:
+    alias: evrinoma.contact.contact.command.manager
+
+  evrinoma.contact.contact.query.manager:
+    class: Evrinoma\ContactBundle\Manager\Contact\QueryManager
+    arguments:
+      - '@evrinoma.contact.contact.repository'
+
+  Evrinoma\ContactBundle\Manager\Contact\QueryManagerInterface:
+    alias: evrinoma.contact.contact.query.manager
+    
+  evrinoma.contact.contact.validator:
+    class: Evrinoma\ContactBundle\Validator\ContactValidator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\Validator\ContactValidator:
+    alias: evrinoma.contact.contact.validator
+
+  evrinoma.contact.contact.query.orm.mediator:
+    class: Evrinoma\ContactBundle\Mediator\Contact\Orm\QueryMediator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\Mediator\Contact\Orm\QueryMediator:
+    alias: evrinoma.contact.contact.query.orm.mediator
+
+  evrinoma.contact.contact.command.mediator:
+    class: Evrinoma\ContactBundle\Mediator\Contact\CommandMediator
+    public: true
+
+  Evrinoma\ContactBundle\Mediator\Contact\CommandMediator:
+    alias: evrinoma.contact.contact.command.mediator
+
+  Evrinoma\ContactBundle\Mediator\Contact\CommandMediatorInterface:
+    alias: evrinoma.contact.contact.command.mediator
+
+  evrinoma.contact.contact.pre.validator:
+    class: Evrinoma\ContactBundle\PreValidator\Contact\DtoPreValidator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\PreValidator\Contact\DtoPreValidator:
+    alias: evrinoma.contact.contact.pre.validator
+
+  Evrinoma\ContactBundle\PreValidator\Contact\DtoPreValidatorInterface:
+    alias: evrinoma.contact.contact.pre.validator
+
+  evrinoma.contact.contact.system.file_system:
+    class: Evrinoma\ContactBundle\System\FileSystem
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\System\FileSystem:
+    alias: evrinoma.contact.contact.system.file_system
+
+  Evrinoma\ContactBundle\System\FileSystemInterface:
+    alias: evrinoma.contact.contact.system.file_system

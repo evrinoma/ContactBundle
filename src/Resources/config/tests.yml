@@ -1,0 +1,3 @@
+imports:
+  - { resource: tests/contact.yml }
+  - { resource: tests/file.yml }

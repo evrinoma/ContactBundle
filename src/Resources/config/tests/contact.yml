@@ -1,0 +1,9 @@
+services:
+  evrinoma.contact.test.functional.action.contact:
+    class: Evrinoma\ContactBundle\Tests\Functional\Action\BaseContact
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\Tests\Functional\Action\BaseContact:
+    alias: evrinoma.contact.test.functional.action.contact
+    public: true

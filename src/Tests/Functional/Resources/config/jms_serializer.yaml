@@ -1,0 +1,6 @@
+jms_serializer:
+  metadata:
+    directories:
+      ContactBundle:
+        namespace_prefix: "Evrinoma\\ContactBundle"
+        path: '%kernel.root_dir%/Resources/config/serializer/ContactBundle'

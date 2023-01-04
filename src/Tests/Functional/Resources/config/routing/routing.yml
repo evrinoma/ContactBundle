@@ -1,0 +1,2 @@
+contact:
+    resource: "@EvrinomaContactBundle/Resources/config/routes.yml"
