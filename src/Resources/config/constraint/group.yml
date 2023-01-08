@@ -1,0 +1,7 @@
+services:
+  evrinoma.contact.constraint.property.group.brief:
+    class: Evrinoma\ContactBundle\Constraint\Property\Group\Brief
+  evrinoma.contact.constraint.property.group.active:
+    class: Evrinoma\ContactBundle\Constraint\Property\Group\Active
+  evrinoma.contact.constraint.property.group.position:
+    class: Evrinoma\ContactBundle\Constraint\Property\Group\Position

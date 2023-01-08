@@ -13,12 +13,9 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DependencyInjection\Compiler;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping;
 use Evrinoma\ContactBundle\DependencyInjection\EvrinomaContactExtension;
-use Evrinoma\ContactBundle\Entity\File\BaseFile;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
-use Evrinoma\ContactBundle\Model\File\FileInterface;
+use Evrinoma\ContactBundle\Model\Group\GroupInterface;
 use Evrinoma\UtilsBundle\DependencyInjection\Compiler\AbstractMapEntity;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -39,29 +36,29 @@ class MapEntityPass extends AbstractMapEntity implements CompilerPassInterface
 
             $this->cleanMetadata($driver, [EvrinomaContactExtension::ENTITY]);
 
-            $entityFile = BaseFile::class;
+            $entityGroup = $container->getParameter('evrinoma.contact.entity_group');
 
-            $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/File', '%s/Entity/File');
+            if (str_contains($entityGroup, EvrinomaContactExtension::ENTITY)) {
+                $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Group', '%s/Entity/Group');
+            }
+            $this->addResolveTargetEntity([$entityGroup => [GroupInterface::class => []]], false);
 
-            $this->addResolveTargetEntity([$entityFile => [FileInterface::class => []]], false);
+            $mapping = $this->getManyToManyRelation();
+            $this->addResolveTargetEntity([$entityGroup => [GroupInterface::class => ['inherited' => true, 'joinTable' => $mapping]]], false);
 
-            $entityContact = $container->getParameter('evrinoma.contact.entity');
+            $entityContact = $container->getParameter('evrinoma.contact.entity_contact');
             if (str_contains($entityContact, EvrinomaContactExtension::ENTITY)) {
                 $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Contact', '%s/Entity/Contact');
             }
             $this->addResolveTargetEntity([$entityContact => [ContactInterface::class => []]], false);
 
-            $mapping = $this->getMapping($entityFile);
-            $this->addResolveTargetEntity([$entityFile => [FileInterface::class => ['inherited' => true, 'joinTable' => $mapping]]], false);
+            $mapping = $this->getManyToManyRelation();
+            $this->addResolveTargetEntity([$entityContact => [ContactInterface::class => ['inherited' => true, 'joinTable' => $mapping]]], false);
         }
     }
 
-    private function getMapping(string $className): array
+    private function getManyToManyRelation(): array
     {
-        $annotationReader = new AnnotationReader();
-        $reflectionClass = new \ReflectionClass($className);
-        $joinTableAttribute = $annotationReader->getClassAnnotation($reflectionClass, Mapping\Table::class);
-
-        return ($joinTableAttribute) ? ['name' => $joinTableAttribute->name] : [];
+        return ['name' => 'e_contact_groups_contacts'];
     }
 }

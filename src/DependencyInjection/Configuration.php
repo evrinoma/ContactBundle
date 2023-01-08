@@ -39,8 +39,10 @@ class Configuration implements ConfigurationInterface
             ->cannotBeOverwritten()
             ->defaultValue('orm')
             ->end()
-            ->scalarNode('factory')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_FACTORY_CONTACT)->end()
-            ->scalarNode('entity')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_BASE_CONTACT)->end()
+            ->scalarNode('factory_contact')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_FACTORY_CONTACT)->end()
+            ->scalarNode('factory_group')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_FACTORY_GROUP)->end()
+            ->scalarNode('entity_contact')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_BASE_CONTACT)->end()
+            ->scalarNode('entity_group')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::ENTITY_BASE_GROUP)->end()
             ->scalarNode('constraints')->defaultTrue()->info('This option is used to enable/disable basic contact constraints')->end()
             ->scalarNode('dto')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::DTO_BASE_CONTACT)->info('This option is used to dto class override')->end()
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()
@@ -50,7 +52,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('services')->addDefaultsIfNotSet()->children()
             ->scalarNode('pre_validator')->defaultNull()->info('This option is used to pre_validator overriding')->end()
             ->scalarNode('handler')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::HANDLER)->info('This option is used to handler override')->end()
-            ->scalarNode('file_system')->defaultNull()->info('This option is used to file system override')->end()
             ->end()->end()
             ->end();
 

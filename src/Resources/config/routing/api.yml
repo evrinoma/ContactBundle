@@ -2,8 +2,8 @@ contact_api:
   resource: "@EvrinomaContactBundle/Controller/ContactApiController.php"
   type: annotation
 
-contact_file_api:
-  resource: "@EvrinomaContactBundle/Controller/FileApiController.php"
+contact_group_api:
+  resource: "@EvrinomaContactBundle/Controller/GroupApiController.php"
   type: annotation
 
 

@@ -14,15 +14,16 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\DependencyInjection;
 
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\ContactPass as PropertyContactPass;
-use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\FilePass as PropertyFilePass;
+use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\GroupPass as PropertyGroupPass;
 use Evrinoma\ContactBundle\Dto\ContactApiDto;
-use Evrinoma\ContactBundle\Dto\FileApiDto;
+use Evrinoma\ContactBundle\Dto\GroupApiDto;
 use Evrinoma\ContactBundle\Entity\Contact\BaseContact;
-use Evrinoma\ContactBundle\Entity\File\BaseFile;
+use Evrinoma\ContactBundle\Entity\Group\BaseGroup;
 use Evrinoma\ContactBundle\EvrinomaContactBundle;
 use Evrinoma\ContactBundle\Factory\Contact\Factory as ContactFactory;
+use Evrinoma\ContactBundle\Factory\Group\Factory as GroupFactory;
 use Evrinoma\ContactBundle\Mediator\Contact\QueryMediatorInterface as ContactQueryMediatorInterface;
-use Evrinoma\ContactBundle\Mediator\File\QueryMediatorInterface as FileQueryMediatorInterface;
+use Evrinoma\ContactBundle\Mediator\Group\QueryMediatorInterface as GroupQueryMediatorInterface;
 use Evrinoma\UtilsBundle\Adaptor\AdaptorRegistry;
 use Evrinoma\UtilsBundle\DependencyInjection\HelperTrait;
 use Evrinoma\UtilsBundle\Handler\BaseHandler;
@@ -41,7 +42,9 @@ class EvrinomaContactExtension extends Extension
     public const ENTITY = 'Evrinoma\ContactBundle\Entity';
     public const MODEL = 'Evrinoma\ContactBundle\Model';
     public const ENTITY_FACTORY_CONTACT = ContactFactory::class;
+    public const ENTITY_FACTORY_GROUP = GroupFactory::class;
     public const ENTITY_BASE_CONTACT = BaseContact::class;
+    public const ENTITY_BASE_GROUP = BaseGroup::class;
     public const DTO_BASE_CONTACT = ContactApiDto::class;
     public const HANDLER = BaseHandler::class;
 
@@ -71,11 +74,18 @@ class EvrinomaContactExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (self::ENTITY_FACTORY_CONTACT !== $config['factory']) {
-            $this->wireFactory($container, $config['factory'], $config['entity']);
+        if (self::ENTITY_FACTORY_CONTACT !== $config['factory_contact']) {
+            $this->wireFactory($container, $config['factory_contact'], $config['entity_contact']);
         } else {
             $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.contact.factory');
-            $definitionFactory->setArgument(0, $config['entity']);
+            $definitionFactory->setArgument(0, $config['entity_contact']);
+        }
+
+        if (self::ENTITY_FACTORY_GROUP !== $config['factory_group']) {
+            $this->wireFactory($container, $config['factory_group'], $config['entity_group']);
+        } else {
+            $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.group.factory');
+            $definitionFactory->setArgument(0, $config['entity_group']);
         }
 
         $registry = null;
@@ -98,7 +108,7 @@ class EvrinomaContactExtension extends Extension
         }
 
         $this->wireMediator($container, ContactQueryMediatorInterface::class, $config['db_driver'], 'contact');
-        $this->wireMediator($container, FileQueryMediatorInterface::class, $config['db_driver'], 'file');
+        $this->wireMediator($container, GroupQueryMediatorInterface::class, $config['db_driver'], 'group');
 
         $this->remapParametersNamespaces(
             $container,
@@ -106,21 +116,22 @@ class EvrinomaContactExtension extends Extension
             [
                 '' => [
                     'db_driver' => 'evrinoma.'.$this->getAlias().'.storage',
-                    'entity' => 'evrinoma.'.$this->getAlias().'.entity',
+                    'entity_contact' => 'evrinoma.'.$this->getAlias().'.entity_contact',
+                    'entity_group' => 'evrinoma.'.$this->getAlias().'.entity_group',
                 ],
             ]
         );
 
         if ($registry && isset(self::$doctrineDrivers[$config['db_driver']])) {
-            $this->wireRepository($container, $registry, ContactQueryMediatorInterface::class, 'contact', $config['entity'], $config['db_driver']);
-            $this->wireRepository($container, $registry, FileQueryMediatorInterface::class, 'file', BaseFile::class, $config['db_driver']);
+            $this->wireRepository($container, $registry, ContactQueryMediatorInterface::class, 'contact', $config['entity_contact'], $config['db_driver']);
+            $this->wireRepository($container, $registry, GroupQueryMediatorInterface::class, 'group', $config['entity_group'], $config['db_driver']);
         }
 
         $this->wireController($container, 'contact', $config['dto']);
-        $this->wireController($container, 'file', FileApiDto::class);
+        $this->wireController($container, 'group', GroupApiDto::class);
 
-        $this->wireValidator($container, 'contact', $config['entity']);
-        $this->wireValidator($container, 'file', BaseFile::class);
+        $this->wireValidator($container, 'contact', $config['entity_contact']);
+        $this->wireValidator($container, 'group', $config['entity_group']);
 
         if ($config['constraints']) {
             $loader->load('validation.yml');
@@ -161,9 +172,6 @@ class EvrinomaContactExtension extends Extension
                         case 'handler':
                             $remap['handler'] = 'evrinoma.'.$this->getAlias().'.contact.services.handler';
                             break;
-                        case 'file_system':
-                            $remap['file_system'] = 'evrinoma.'.$this->getAlias().'.contact.services.system.file_system';
-                            break;
                     }
                 }
             }
@@ -183,8 +191,8 @@ class EvrinomaContactExtension extends Extension
                 case false !== str_contains($key, PropertyContactPass::CONTACT_CONSTRAINT):
                     $definition->addTag(PropertyContactPass::CONTACT_CONSTRAINT);
                     break;
-                case false !== str_contains($key, PropertyFilePass::FILE_CONSTRAINT):
-                    $definition->addTag(PropertyFilePass::FILE_CONSTRAINT);
+                case false !== str_contains($key, PropertyGroupPass::FILE_CONSTRAINT):
+                    $definition->addTag(PropertyGroupPass::FILE_CONSTRAINT);
                     break;
 //                case false !== strpos($key, ContactPass::CONTACT_CONSTRAINT):
 //                    $definition->addTag(ContactPass::CONTACT_CONSTRAINT);

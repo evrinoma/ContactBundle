@@ -1,4 +1,4 @@
-Evrinoma\ContactBundle\Model\Contact\AbstractContact:
+Evrinoma\ContactBundle\Model\Group\AbstractGroup:
   exclusion_policy: ALL
   properties:
     id:
@@ -7,33 +7,7 @@ Evrinoma\ContactBundle\Model\Contact\AbstractContact:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    createdAt:
-      type: DateTimeImmutable<'Y-m-d H:i'>
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    updatedAt:
-      type: DateTimeImmutable<'Y-m-d H:i'>
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    active:
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    title:
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    position:
+    brief:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
@@ -45,8 +19,20 @@ Evrinoma\ContactBundle\Model\Contact\AbstractContact:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    groups:
-      type: ArrayCollection<Evrinoma\ContactBundle\Model\Group\AbstractGroup>
+    active:
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
+    position:
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
+    contacts:
+      type: ArrayCollection<Evrinoma\ContactBundle\Model\Contact\AbstractContact>
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,

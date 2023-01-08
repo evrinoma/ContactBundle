@@ -15,7 +15,7 @@ namespace Evrinoma\ContactBundle;
 
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Complex\ContactPass;
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\ContactPass as PropertyContactPass;
-use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\FilePass as PropertyFilePass;
+use Evrinoma\ContactBundle\DependencyInjection\Compiler\Constraint\Property\GroupPass as PropertyGroupPass;
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\DecoratorPass;
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\MapEntityPass;
 use Evrinoma\ContactBundle\DependencyInjection\Compiler\ServicePass;
@@ -33,7 +33,7 @@ class EvrinomaContactBundle extends Bundle
         $container
             ->addCompilerPass(new MapEntityPass($this->getNamespace(), $this->getPath()))
             ->addCompilerPass(new PropertyContactPass())
-            ->addCompilerPass(new PropertyFilePass())
+            ->addCompilerPass(new PropertyGroupPass())
             ->addCompilerPass(new ContactPass())
             ->addCompilerPass(new DecoratorPass())
             ->addCompilerPass(new ServicePass())

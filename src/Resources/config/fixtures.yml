@@ -4,7 +4,7 @@ services:
     tags:
       - { name: doctrine.fixture.orm }
 
-  evrinoma.contact.fixtures.file:
-    class: Evrinoma\ContactBundle\Fixtures\FileFixtures
+  evrinoma.contact.fixtures.group:
+    class: Evrinoma\ContactBundle\Fixtures\GroupFixtures
     tags:
       - { name: doctrine.fixture.orm }

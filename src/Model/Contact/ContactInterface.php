@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Model\Contact;
 
 use Doctrine\Common\Collections\Collection;
-use Evrinoma\ContactBundle\Model\File\FileInterface;
+use Evrinoma\ContactBundle\Model\Group\GroupInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtInterface;
 use Evrinoma\UtilsBundle\Entity\IdInterface;
@@ -24,14 +24,11 @@ use Evrinoma\UtilsBundle\Entity\TitleInterface;
 interface ContactInterface extends ActiveInterface, CreateUpdateAtInterface, IdInterface, TitleInterface, PositionInterface
 {
     /**
-     * @param Collection|FileInterface[] $file
-     *
-     *  @return ContactInterface
+     * @return Collection|GroupInterface[]
      */
-    public function setFile($file): ContactInterface;
+    public function getGroups(): Collection;
 
-    /**
-     * @return Collection|FileInterface[]
-     */
-    public function getFile(): Collection;
+    public function addGroup(GroupInterface $group): ContactInterface;
+
+    public function removeGroup(GroupInterface $group): ContactInterface;
 }

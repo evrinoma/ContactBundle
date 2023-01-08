@@ -16,7 +16,7 @@ namespace Evrinoma\ContactBundle\Model\Contact;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Evrinoma\ContactBundle\Model\File\FileInterface;
+use Evrinoma\ContactBundle\Model\Group\GroupInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtTrait;
 use Evrinoma\UtilsBundle\Entity\IdTrait;
@@ -35,37 +35,41 @@ abstract class AbstractContact implements ContactInterface
     use TitleTrait;
 
     /**
-     * @var ArrayCollection|FileInterface[]
+     * @var ArrayCollection|GroupInterface[]
      *
-     * @ORM\ManyToMany(targetEntity="Evrinoma\ContactBundle\Model\File\FileInterface")
+     * @ORM\ManyToMany(targetEntity="Evrinoma\ContactBundle\Model\Group\GroupInterface")
      * @ORM\JoinTable(
      *     joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )
      */
-    protected $file;
+    protected $groups;
 
     public function __construct()
     {
-        $this->file = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
-     * @return Collection|FileInterface[]
+     * @return Collection|GroupInterface[]
      */
-    public function getFile(): Collection
+    public function getGroups(): Collection
     {
-        return $this->file;
+        return $this->groups;
     }
 
-    /**
-     * @param Collection|FileInterface[] $file
-     *
-     *  @return ContactInterface
-     */
-    public function setFile($file): ContactInterface
+    public function addGroup(GroupInterface $group): ContactInterface
     {
-        $this->file = $file;
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(GroupInterface $group): ContactInterface
+    {
+        $this->groups->removeElement($group);
 
         return $this;
     }

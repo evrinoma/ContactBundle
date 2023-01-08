@@ -1,7 +1,0 @@
-services:
-  evrinoma.contact.constraint.property.file.brief:
-    class: Evrinoma\ContactBundle\Constraint\Property\File\Brief
-  evrinoma.contact.constraint.property.file.active:
-    class: Evrinoma\ContactBundle\Constraint\Property\File\Active
-  evrinoma.contact.constraint.property.file.position:
-    class: Evrinoma\ContactBundle\Constraint\Property\File\Position

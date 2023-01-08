@@ -1,0 +1,97 @@
+services:
+  Evrinoma\ContactBundle\Controller\GroupApiController:
+    alias: evrinoma.contact.group.api.controller
+    public: true
+
+  evrinoma.contact.group.api.controller:
+    class: Evrinoma\ContactBundle\Controller\GroupApiController
+    arguments:
+      - '@jms_serializer'
+      - '@request_stack'
+      - '@evrinoma.dto.factory'
+      - '@evrinoma.contact.group.facade'
+    autowire: true
+
+  evrinoma.contact.group.facade:
+    class: Evrinoma\ContactBundle\Facade\Group\Facade
+    arguments:
+      - '@evrinoma.contact.group.command.manager'
+      - '@evrinoma.contact.group.query.manager'
+      - '@evrinoma.contact.adaptor'
+    autowire: true
+
+  Evrinoma\ContactBundle\Facade\Group\FacadeInterface:
+    alias: evrinoma.contact.group.facade
+
+  evrinoma.contact.group.factory:
+    class: Evrinoma\ContactBundle\Factory\Group\Factory
+    public: true
+    arguments:
+
+  evrinoma.contact.group.orm.repository:
+    class: Evrinoma\ContactBundle\Repository\Orm\Group\GroupRepository
+    public: true
+    arguments:
+
+  evrinoma.contact.group.command.manager:
+    class: Evrinoma\ContactBundle\Manager\Group\CommandManager
+    arguments:
+      - '@evrinoma.contact.group.validator'
+      - '@evrinoma.contact.group.repository'
+      - '@evrinoma.contact.group.factory'
+      - '@evrinoma.contact.group.command.mediator'
+      - '@evrinoma.contact.contact.query.manager'
+
+  Evrinoma\ContactBundle\Manager\Group\CommandManagerInterface:
+    alias: evrinoma.contact.group.command.manager
+
+  evrinoma.contact.group.query.manager:
+    class: Evrinoma\ContactBundle\Manager\Group\QueryManager
+    arguments:
+      - '@evrinoma.contact.group.repository'
+
+  Evrinoma\ContactBundle\Manager\Group\QueryManagerInterface:
+    alias: evrinoma.contact.group.query.manager
+
+  evrinoma.contact.group.validator:
+    class: Evrinoma\ContactBundle\Validator\GroupValidator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\Validator\GroupValidator:
+    alias: evrinoma.contact.group.validator
+
+  evrinoma.contact.group.query.orm.mediator:
+    class: Evrinoma\ContactBundle\Mediator\Group\Orm\QueryMediator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\Mediator\Group\Orm\QueryMediator:
+    alias: evrinoma.contact.group.query.orm.mediator
+
+  evrinoma.contact.group.command.mediator:
+    class: Evrinoma\ContactBundle\Mediator\Group\CommandMediator
+    public: true
+
+  Evrinoma\ContactBundle\Mediator\Group\CommandMediator:
+    alias: evrinoma.contact.group.command.mediator
+
+  Evrinoma\ContactBundle\Mediator\Group\CommandMediatorInterface:
+    alias: evrinoma.contact.group.command.mediator
+
+  evrinoma.contact.group.pre.validator:
+    class: Evrinoma\ContactBundle\PreValidator\Group\DtoPreValidator
+    public: true
+    arguments:
+
+  Evrinoma\ContactBundle\PreValidator\Group\DtoPreValidator:
+    alias: evrinoma.contact.group.pre.validator
+
+  Evrinoma\ContactBundle\PreValidator\Group\DtoPreValidatorInterface:
+    alias: evrinoma.contact.group.pre.validator
+
+  evrinoma.contact.group.form.rest.group:
+    class: Evrinoma\ContactBundle\Form\Rest\Group\GroupChoiceType
+    arguments:
+      - '@evrinoma.contact.group.query.manager'
+    tags: { - name: form.type }

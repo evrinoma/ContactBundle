@@ -88,14 +88,3 @@ services:
 
   Evrinoma\ContactBundle\PreValidator\Contact\DtoPreValidatorInterface:
     alias: evrinoma.contact.contact.pre.validator
-
-  evrinoma.contact.contact.system.file_system:
-    class: Evrinoma\ContactBundle\System\FileSystem
-    public: true
-    arguments:
-
-  Evrinoma\ContactBundle\System\FileSystem:
-    alias: evrinoma.contact.contact.system.file_system
-
-  Evrinoma\ContactBundle\System\FileSystemInterface:
-    alias: evrinoma.contact.contact.system.file_system
