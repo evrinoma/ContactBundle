@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto\Preserve;
 
-use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
-use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\ContactsTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\ContactTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\ActiveTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\BriefTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\IdTrait;
@@ -24,21 +24,8 @@ trait GroupApiDtoTrait
 {
     use ActiveTrait;
     use BriefTrait;
+    use ContactsTrait;
+    use ContactTrait;
     use IdTrait;
     use PositionTrait;
-
-    public function addContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
-    {
-        return parent::addContactApiDto($contactApiDto);
-    }
-
-    /**
-     * @param ContactApiDtoInterface $contactApiDto
-     *
-     * @return DtoInterface
-     */
-    public function setContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
-    {
-        return parent::setContactApiDto($contactApiDto);
-    }
 }

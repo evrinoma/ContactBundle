@@ -40,7 +40,7 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
                 $entity->removeContact($contact);
             }
 
-            foreach ($dto->getContactApiDtos() as $contactApiDto) {
+            foreach ($dto->getContactsApiDto() as $contactApiDto) {
                 $entity->addContact($this->contactQueryManager->proxy($contactApiDto));
             }
         } catch (\Exception $e) {
@@ -75,7 +75,7 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
         /* @var $dto GroupApiDtoInterface */
 
         try {
-            foreach ($dto->getContactApiDtos() as $contactApiDto) {
+            foreach ($dto->getContactsApiDto() as $contactApiDto) {
                 $entity->addContact($this->contactQueryManager->proxy($contactApiDto));
             }
         } catch (\Exception $e) {

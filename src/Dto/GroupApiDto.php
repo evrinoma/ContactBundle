@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto;
 
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactsTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactTrait;
 use Evrinoma\DtoBundle\Annotation\Dto;
 use Evrinoma\DtoBundle\Annotation\Dtos;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
@@ -27,6 +29,8 @@ class GroupApiDto extends AbstractDto implements GroupApiDtoInterface
 {
     use ActiveTrait;
     use BriefTrait;
+    use ContactsTrait;
+    use ContactTrait;
     use IdTrait;
     use PositionTrait;
 
@@ -35,83 +39,14 @@ class GroupApiDto extends AbstractDto implements GroupApiDtoInterface
      *
      * @var ContactApiDtoInterface|null
      */
-    private ?ContactApiDtoInterface $contactApiDto = null;
+    protected ?ContactApiDtoInterface $contactApiDto = null;
 
     /**
-     * @Dtos(class="Evrinoma\ContactBundle\Dto\ContactApiDto", generator="genRequestContactApiDtos", add="addContactApiDto")
+     * @Dtos(class="Evrinoma\ContactBundle\Dto\ContactApiDto", generator="genRequestContactsApiDto", add="addContactsApiDto")
      *
      * @var ContactApiDtoInterface []
      */
-    private array $contactApiDtos = [];
-
-    public function setContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
-    {
-        $this->contactApiDto = $contactApiDto;
-
-        return $this;
-    }
-
-    public function hasContactApiDto(): bool
-    {
-        return null !== $this->contactApiDto;
-    }
-
-    public function getContactApiDto(): ContactApiDtoInterface
-    {
-        return $this->contactApiDto;
-    }
-
-    public function genRequestContactApiDto(?Request $request): ?\Generator
-    {
-        if ($request) {
-            $type = $request->get(ContactApiDtoInterface::CONTACT);
-            if ($type) {
-                $newRequest = $this->getCloneRequest();
-                $type[DtoInterface::DTO_CLASS] = ContactApiDto::class;
-                $newRequest->request->add($type);
-
-                yield $newRequest;
-            }
-        }
-    }
-
-    public function hasComments(): bool
-    {
-        return 0 !== \count($this->contactApiDtos);
-    }
-
-    public function hasContactApiDtos(): bool
-    {
-        return 0 !== \count($this->contactApiDtos);
-    }
-
-    public function getContactApiDtos(): array
-    {
-        return $this->contactApiDtos;
-    }
-
-    public function genRequestContactApiDtos(?Request $request): ?\Generator
-    {
-        if ($request) {
-            $entities = $request->get(ContactApiDtoInterface::CONTACTS);
-            if ($entities) {
-                foreach ($entities as $entity) {
-                    $newRequest = $this->getCloneRequest();
-                    $entity[DtoInterface::DTO_CLASS] = ContactApiDto::class;
-                    $newRequest->request->add($entity);
-
-                    yield $newRequest;
-                }
-            }
-        }
-    }
-
-    public function addContactApiDto(ContactApiDtoInterface $contactApiDto): GroupApiDtoInterface
-    {
-        $this->contactApiDtos[] = $contactApiDto;
-
-        return $this;
-    }
+    protected array $contactsApiDto = [];
 
     public function toDto(Request $request): DtoInterface
     {

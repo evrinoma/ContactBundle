@@ -50,7 +50,7 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
             GroupApiDtoInterface::BRIEF => Brief::default(),
             GroupApiDtoInterface::POSITION => Position::value(),
             GroupApiDtoInterface::ACTIVE => Active::value(),
-            ContactApiDtoInterface::CONTACTS => [BaseContact::defaultData()],
+            GroupApiDtoInterface::CONTACTS => [BaseContact::defaultData()],
         ];
     }
 
@@ -84,11 +84,11 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $contact = BaseContact::defaultData();
         $contact[ContactApiDtoInterface::ACTIVE] = Active::block();
         $contact[ContactApiDtoInterface::TITLE] = Title::value();
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), ContactApiDtoInterface::CONTACT => $contact]);
+        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::CONTACT => $contact]);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
-        Assert::assertArrayHasKey(ContactApiDtoInterface::CONTACTS, $find[PayloadModel::PAYLOAD][0]);
-        Assert::assertCount(1, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::CONTACTS]);
+        Assert::assertArrayHasKey(GroupApiDtoInterface::CONTACTS, $find[PayloadModel::PAYLOAD][0]);
+        Assert::assertCount(1, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::CONTACTS]);
     }
 
     public function actionDelete(): void
