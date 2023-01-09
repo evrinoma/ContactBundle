@@ -25,7 +25,7 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
 {
     use QueryMediatorTrait;
 
-    protected static string $alias = AliasInterface::CONTACTS;
+    protected static string $alias = AliasInterface::CONTACT;
 
     /**
      * @param DtoInterface          $dto
@@ -59,6 +59,24 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
             $builder
                 ->andWhere($alias.'.active = :active')
                 ->setParameter('active', $dto->getActive());
+        }
+
+        $aliasGroups = AliasInterface::GROUPS;
+        $builder
+            ->leftJoin($alias.'.groups', $aliasGroups)
+            ->addSelect($aliasGroups);
+
+        if ($dto->hasGroupApiDto()) {
+            if ($dto->getGroupApiDto()->hasActive()) {
+                $builder
+                    ->andWhere($aliasGroups.'.active = :groupActive')
+                    ->setParameter('groupActive', $dto->getGroupApiDto()->getActive());
+            }
+            if ($dto->getGroupApiDto()->hasBrief()) {
+                $builder
+                    ->andWhere($aliasGroups.'.brief = :groupBrief')
+                    ->setParameter('groupBrief', $dto->getGroupApiDto()->getBrief());
+            }
         }
     }
 }

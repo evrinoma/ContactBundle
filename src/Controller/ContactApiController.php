@@ -69,11 +69,23 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                     "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
      *                     "position": "0",
      *                     "title": "bla bla",
+     *                     "groups": {
+     *                         {
+     *                             "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     }
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
      *                 @OA\Property(property="position", type="string"),
      *                 @OA\Property(property="title", type="string"),
+     *                 @OA\Property(property="groups", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
      *             )
      *         )
      *     )
@@ -118,6 +130,12 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                     "active": "b",
      *                     "position": "0",
      *                     "title": "bla bla",
+     *                     "groups": {
+     *                         {
+     *                             "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     }
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
@@ -125,6 +143,12 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                 @OA\Property(property="active", type="string"),
      *                 @OA\Property(property="position", type="string"),
      *                 @OA\Property(property="title", type="string"),
+     *                 @OA\Property(property="groups", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
      *             )
      *         )
      *     )
@@ -259,6 +283,14 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *             ),
      *         ),
      *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="group[active]",
+     *         in="query",
+     *         description="Group active",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
      *     ),
      * )
      * @OA\Response(response=200, description="Return contact")

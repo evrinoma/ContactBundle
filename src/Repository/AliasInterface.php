@@ -15,6 +15,9 @@ namespace Evrinoma\ContactBundle\Repository;
 
 interface AliasInterface
 {
-    public const CONTACTS = 'contacts';
+    public const CONTACT = 'contact';
+    public const CONTACTS = AliasInterface::CONTACT.'s';
+
     public const GROUP = 'grp';
+    public const GROUPS = AliasInterface::CONTACT.'s';
 }

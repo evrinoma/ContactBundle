@@ -50,7 +50,6 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
             GroupApiDtoInterface::BRIEF => Brief::default(),
             GroupApiDtoInterface::POSITION => Position::value(),
             GroupApiDtoInterface::ACTIVE => Active::value(),
-            GroupApiDtoInterface::CONTACTS => [BaseContact::defaultData()],
         ];
     }
 
@@ -62,29 +61,34 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionCriteriaNotFound(): void
     {
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::wrong()]);
+        $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::wrong()]);
+        $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
 
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::ACTIVE => Active::block()]);
+        $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::ACTIVE => Active::block()]);
+        $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
     }
 
     public function actionCriteria(): void
     {
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value()]);
+        $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value()]);
+        $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
 
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::delete()]);
+        $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::delete()]);
+        $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(3, $find[PayloadModel::PAYLOAD]);
 
         $contact = BaseContact::defaultData();
         $contact[ContactApiDtoInterface::ACTIVE] = Active::block();
         $contact[ContactApiDtoInterface::TITLE] = Title::value();
-        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::CONTACT => $contact]);
+        $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::CONTACT => $contact]);
+        $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
         Assert::assertArrayHasKey(GroupApiDtoInterface::CONTACTS, $find[PayloadModel::PAYLOAD][0]);
@@ -107,7 +111,7 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionPut(): void
     {
-        $query = static::getDefault([GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::BRIEF => Brief::value()]);
+        $query = static::withContacts(static::getDefault([GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::BRIEF => Brief::value()]));
 
         $find = $this->assertGet(Id::value());
 
@@ -145,10 +149,8 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionPutNotFound(): void
     {
-        $this->put(static::getDefault([
-            GroupApiDtoInterface::ID => Id::wrong(),
-            GroupApiDtoInterface::BRIEF => Brief::wrong(),
-        ]));
+        $query = static::withContacts(static::getDefault([GroupApiDtoInterface::ID => Id::wrong(),            GroupApiDtoInterface::BRIEF => Brief::wrong()]));
+        $this->put($query);
         $this->testResponseStatusNotFound();
     }
 
@@ -158,12 +160,12 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $this->testResponseStatusCreated();
         $this->checkResult($created);
 
-        $query = static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::BRIEF => Brief::empty()]);
+        $query = static::withContacts(static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::BRIEF => Brief::empty()]));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();
 
-        $query = static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::POSITION => Position::empty()]);
+        $query = static::withContacts(static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::POSITION => Position::empty()]));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();

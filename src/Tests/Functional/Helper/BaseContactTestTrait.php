@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Tests\Functional\Helper;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\Tests\Functional\Action\BaseGroup;
 use Evrinoma\UtilsBundle\Model\Rest\PayloadModel;
 use PHPUnit\Framework\Assert;
 
@@ -29,9 +30,16 @@ trait BaseContactTestTrait
         return $find;
     }
 
+    protected static function withGroups(array $query): array
+    {
+        $query[ContactApiDtoInterface::GROUPS] = [BaseGroup::defaultData()];
+
+        return $query;
+    }
+
     protected function createContact(): array
     {
-        $query = static::getDefault();
+        $query = static::withGroups(static::getDefault());
 
         return $this->post($query);
     }
@@ -45,7 +53,7 @@ trait BaseContactTestTrait
 
     protected function createConstraintBlankTitle(): array
     {
-        $query = static::getDefault([ContactApiDtoInterface::TITLE => '']);
+        $query = static::withGroups(static::getDefault([ContactApiDtoInterface::TITLE => '']));
 
         return $this->post($query);
     }
