@@ -20,7 +20,6 @@ use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeSavedException;
 use Evrinoma\ContactBundle\Exception\Group\GroupInvalidException;
 use Evrinoma\ContactBundle\Exception\Group\GroupNotFoundException;
 use Evrinoma\ContactBundle\Factory\Group\FactoryInterface;
-use Evrinoma\ContactBundle\Manager\Contact\QueryManagerInterface as ContactQueryManagerInterface;
 use Evrinoma\ContactBundle\Mediator\Group\CommandMediatorInterface;
 use Evrinoma\ContactBundle\Model\Group\GroupInterface;
 use Evrinoma\ContactBundle\Repository\Group\GroupRepositoryInterface;
@@ -32,15 +31,13 @@ final class CommandManager implements CommandManagerInterface
     private ValidatorInterface            $validator;
     private FactoryInterface           $factory;
     private CommandMediatorInterface      $mediator;
-    private ContactQueryManagerInterface $contactQueryManager;
 
-    public function __construct(ValidatorInterface $validator, GroupRepositoryInterface $repository, FactoryInterface $factory, CommandMediatorInterface $mediator, ContactQueryManagerInterface $contactQueryManager)
+    public function __construct(ValidatorInterface $validator, GroupRepositoryInterface $repository, FactoryInterface $factory, CommandMediatorInterface $mediator)
     {
         $this->validator = $validator;
         $this->repository = $repository;
         $this->factory = $factory;
         $this->mediator = $mediator;
-        $this->contactQueryManager = $contactQueryManager;
     }
 
     /**
@@ -57,12 +54,6 @@ final class CommandManager implements CommandManagerInterface
         $group = $this->factory->create($dto);
 
         $this->mediator->onCreate($dto, $group);
-
-//        try {
-//            $group->setContact($this->contactQueryManager->proxy($dto->getContactApiDto()));
-//        } catch (\Exception $e) {
-//            throw new GroupCannotBeCreatedException($e->getMessage());
-//        }
 
         $errors = $this->validator->validate($group);
 
@@ -93,12 +84,6 @@ final class CommandManager implements CommandManagerInterface
         } catch (GroupNotFoundException $e) {
             throw $e;
         }
-
-//        try {
-//            $group->add($this->contactQueryManager->proxy($dto->getContactApiDto()));
-//        } catch (\Exception $e) {
-//            throw new GroupCannotBeSavedException($e->getMessage());
-//        }
 
         $this->mediator->onUpdate($dto, $group);
 

@@ -22,6 +22,14 @@ use Evrinoma\DtoCommon\ValueObject\Immutable\PositionInterface;
 interface GroupApiDtoInterface extends DtoInterface, IdInterface, BriefInterface, ActiveInterface, PositionInterface
 {
     public const GROUP = 'group';
+    public const GROUPS = GroupApiDtoInterface::GROUP.'s';
+
+    public function hasContactApiDtos(): bool;
+
+    /**
+     * @return array|ContactApiDtoInterface[]
+     */
+    public function getContactApiDtos(): array;
 
     public function hasContactApiDto(): bool;
 

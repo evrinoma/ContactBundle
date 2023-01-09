@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Dto;
 
 use Evrinoma\DtoBundle\Annotation\Dto;
+use Evrinoma\DtoBundle\Annotation\Dtos;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveTrait;
@@ -31,14 +32,18 @@ class GroupApiDto extends AbstractDto implements GroupApiDtoInterface
 
     /**
      * @Dto(class="Evrinoma\ContactBundle\Dto\ContactApiDto", generator="genRequestContactApiDto")
+     *
+     * @var ContactApiDtoInterface|null
      */
     private ?ContactApiDtoInterface $contactApiDto = null;
 
     /**
-     * @param ContactApiDtoInterface $contactApiDto
+     * @Dtos(class="Evrinoma\ContactBundle\Dto\ContactApiDto", generator="genRequestContactApiDtos", add="addContactApiDto")
      *
-     * @return DtoInterface
+     * @var ContactApiDtoInterface []
      */
+    private array $contactApiDtos = [];
+
     public function setContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
     {
         $this->contactApiDto = $contactApiDto;
@@ -68,6 +73,44 @@ class GroupApiDto extends AbstractDto implements GroupApiDtoInterface
                 yield $newRequest;
             }
         }
+    }
+
+    public function hasComments(): bool
+    {
+        return 0 !== \count($this->contactApiDtos);
+    }
+
+    public function hasContactApiDtos(): bool
+    {
+        return 0 !== \count($this->contactApiDtos);
+    }
+
+    public function getContactApiDtos(): array
+    {
+        return $this->contactApiDtos;
+    }
+
+    public function genRequestContactApiDtos(?Request $request): ?\Generator
+    {
+        if ($request) {
+            $entities = $request->get(ContactApiDtoInterface::CONTACTS);
+            if ($entities) {
+                foreach ($entities as $entity) {
+                    $newRequest = $this->getCloneRequest();
+                    $entity[DtoInterface::DTO_CLASS] = ContactApiDto::class;
+                    $newRequest->request->add($entity);
+
+                    yield $newRequest;
+                }
+            }
+        }
+    }
+
+    public function addContactApiDto(ContactApiDtoInterface $contactApiDto): GroupApiDtoInterface
+    {
+        $this->contactApiDtos[] = $contactApiDto;
+
+        return $this;
     }
 
     public function toDto(Request $request): DtoInterface

@@ -22,4 +22,5 @@ use Evrinoma\DtoCommon\ValueObject\Immutable\TitleInterface;
 interface ContactApiDtoInterface extends DtoInterface, IdInterface, TitleInterface, PositionInterface, ActiveInterface
 {
     public const CONTACT = 'contact';
+    public const CONTACTS = ContactApiDtoInterface::CONTACT.'s';
 }

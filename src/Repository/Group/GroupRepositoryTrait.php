@@ -27,17 +27,17 @@ trait GroupRepositoryTrait
     private QueryMediatorInterface $mediator;
 
     /**
-     * @param GroupInterface $type
+     * @param GroupInterface $group
      *
      * @return bool
      *
      * @throws GroupCannotBeSavedException
      * @throws ORMException
      */
-    public function save(GroupInterface $type): bool
+    public function save(GroupInterface $group): bool
     {
         try {
-            $this->persistWrapped($type);
+            $this->persistWrapped($group);
         } catch (ORMInvalidArgumentException $e) {
             throw new GroupCannotBeSavedException($e->getMessage());
         }
@@ -46,11 +46,11 @@ trait GroupRepositoryTrait
     }
 
     /**
-     * @param GroupInterface $type
+     * @param GroupInterface $group
      *
      * @return bool
      */
-    public function remove(GroupInterface $type): bool
+    public function remove(GroupInterface $group): bool
     {
         return true;
     }
@@ -68,13 +68,13 @@ trait GroupRepositoryTrait
 
         $this->mediator->createQuery($dto, $builder);
 
-        $types = $this->mediator->getResult($dto, $builder);
+        $groups = $this->mediator->getResult($dto, $builder);
 
-        if (0 === \count($types)) {
-            throw new GroupNotFoundException('Cannot find type by findByCriteria');
+        if (0 === \count($groups)) {
+            throw new GroupNotFoundException('Cannot find group by findByCriteria');
         }
 
-        return $types;
+        return $groups;
     }
 
     /**
@@ -88,14 +88,14 @@ trait GroupRepositoryTrait
      */
     public function find($id, $lockMode = null, $lockVersion = null): GroupInterface
     {
-        /** @var GroupInterface $type */
-        $type = $this->findWrapped($id);
+        /** @var GroupInterface $group */
+        $group = $this->findWrapped($id);
 
-        if (null === $type) {
-            throw new GroupNotFoundException("Cannot find type with id $id");
+        if (null === $group) {
+            throw new GroupNotFoundException("Cannot find group with id $id");
         }
 
-        return $type;
+        return $group;
     }
 
     /**
@@ -108,12 +108,12 @@ trait GroupRepositoryTrait
      */
     public function proxy(string $id): GroupInterface
     {
-        $type = $this->referenceWrapped($id);
+        $group = $this->referenceWrapped($id);
 
-        if (!$this->containsWrapped($type)) {
+        if (!$this->containsWrapped($group)) {
             throw new GroupProxyException("Proxy doesn't exist with $id");
         }
 
-        return $type;
+        return $group;
     }
 }

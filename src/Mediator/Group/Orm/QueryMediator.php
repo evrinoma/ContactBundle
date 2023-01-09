@@ -25,7 +25,7 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
 {
     use QueryMediatorTrait;
 
-    protected static string $alias = AliasInterface::FILE;
+    protected static string $alias = AliasInterface::GROUP;
 
     /**
      * @param DtoInterface          $dto
@@ -56,14 +56,21 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
                 ->setParameter('active', $dto->getActive());
         }
 
+        $aliasContacts = AliasInterface::CONTACTS;
+        $builder
+            ->leftJoin($alias.'.contacts', $aliasContacts)
+            ->addSelect($aliasContacts);
+
         if ($dto->hasContactApiDto()) {
-            $aliasContact = AliasInterface::CONTACT;
-            $builder
-                ->leftJoin($alias.'.contact', $aliasContact)
-                ->addSelect($aliasContact);
-            if ($dto->getContactApiDto()->hasId()) {
-                $builder->andWhere($aliasContact.'.id = :idContact')
-                    ->setParameter('idContact', $dto->getContactApiDto()->getId());
+            if ($dto->getContactApiDto()->hasActive()) {
+                $builder
+                    ->andWhere($aliasContacts.'.active = :contactActive')
+                    ->setParameter('contactActive', $dto->getContactApiDto()->getActive());
+            }
+            if ($dto->getContactApiDto()->hasTitle()) {
+                $builder
+                    ->andWhere($aliasContacts.'.title like :contactTitle')
+                    ->setParameter('contactTitle', '%'.$dto->getContactApiDto()->getTitle().'%');
             }
         }
     }

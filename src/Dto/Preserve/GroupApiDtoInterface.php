@@ -22,10 +22,5 @@ use Evrinoma\DtoCommon\ValueObject\Mutable\PositionInterface;
 
 interface GroupApiDtoInterface extends IdInterface, BriefInterface, ActiveInterface, PositionInterface
 {
-    /**
-     * @param ContactApiDtoInterface $contactApiDto
-     *
-     * @return DtoInterface
-     */
-    public function setContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface;
+    public function addContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface;
 }

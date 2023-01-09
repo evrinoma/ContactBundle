@@ -17,6 +17,7 @@ use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Dto\GroupApiDto;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\ContactBundle\Tests\Functional\Helper\BaseGroupTestTrait;
+use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Contact\Title;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Group\Active;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Group\Brief;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Group\Id;
@@ -49,7 +50,7 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
             GroupApiDtoInterface::BRIEF => Brief::default(),
             GroupApiDtoInterface::POSITION => Position::value(),
             GroupApiDtoInterface::ACTIVE => Active::value(),
-            ContactApiDtoInterface::CONTACT => BaseContact::defaultData(),
+            ContactApiDtoInterface::CONTACTS => [BaseContact::defaultData()],
         ];
     }
 
@@ -79,6 +80,15 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::delete()]);
         $this->testResponseStatusOK();
         Assert::assertCount(3, $find[PayloadModel::PAYLOAD]);
+
+        $contact = BaseContact::defaultData();
+        $contact[ContactApiDtoInterface::ACTIVE] = Active::block();
+        $contact[ContactApiDtoInterface::TITLE] = Title::value();
+        $find = $this->criteria([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), ContactApiDtoInterface::CONTACT => $contact]);
+        $this->testResponseStatusOK();
+        Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
+        Assert::assertArrayHasKey(ContactApiDtoInterface::CONTACTS, $find[PayloadModel::PAYLOAD][0]);
+        Assert::assertCount(1, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::CONTACTS]);
     }
 
     public function actionDelete(): void

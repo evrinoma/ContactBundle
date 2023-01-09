@@ -27,6 +27,11 @@ trait GroupApiDtoTrait
     use IdTrait;
     use PositionTrait;
 
+    public function addContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
+    {
+        return parent::addContactApiDto($contactApiDto);
+    }
+
     /**
      * @param ContactApiDtoInterface $contactApiDto
      *

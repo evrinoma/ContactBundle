@@ -248,14 +248,14 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *         )
      *     ),
      *     @OA\Parameter(
-     *         name="file[brief]",
+     *         name="group[brief]",
      *         in="query",
-     *         description="Type Contact",
+     *         description="Group Contact",
      *         @OA\Schema(
      *             type="array",
      *             @OA\Items(
      *                 type="string",
-     *                 ref=@Model(type=Evrinoma\ContactBundle\Form\Rest\File\FileChoiceType::class, options={"data": "brief"})
+     *                 ref=@Model(type=Evrinoma\ContactBundle\Form\Rest\Group\GroupChoiceType::class, options={"data": "brief"})
      *             ),
      *         ),
      *         style="form"

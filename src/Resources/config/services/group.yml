@@ -40,7 +40,6 @@ services:
       - '@evrinoma.contact.group.repository'
       - '@evrinoma.contact.group.factory'
       - '@evrinoma.contact.group.command.mediator'
-      - '@evrinoma.contact.contact.query.manager'
 
   Evrinoma\ContactBundle\Manager\Group\CommandManagerInterface:
     alias: evrinoma.contact.group.command.manager
@@ -72,6 +71,8 @@ services:
   evrinoma.contact.group.command.mediator:
     class: Evrinoma\ContactBundle\Mediator\Group\CommandMediator
     public: true
+    arguments:
+      - '@evrinoma.contact.contact.query.manager'
 
   Evrinoma\ContactBundle\Mediator\Group\CommandMediator:
     alias: evrinoma.contact.group.command.mediator

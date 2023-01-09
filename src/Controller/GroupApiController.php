@@ -68,18 +68,22 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                     "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
      *                     "position": "0",
      *                     "title": "bla bla",
-     *                     "contact": {
-     *                         "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
-     *                         "id": "1",
+     *                     "contacts": {
+     *                         {
+     *                             "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
+     *                             "id": "1",
+     *                         },
      *                     }
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
      *                 @OA\Property(property="position", type="int"),
      *                 @OA\Property(property="brief", type="string"),
-     *                 @OA\Property(property="contact", type="object",
-     *                     @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
-     *                     @OA\Property(property="id", type="string", default="1"),
+     *                 @OA\Property(property="contacts", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
      *                 ),
      *             )
      *         )
@@ -125,9 +129,11 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                     "id": "1",
      *                     "active": "b",
      *                     "title": "bla bla",
-     *                     "contact": {
-     *                         "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
-     *                         "id": "1",
+     *                     "contacts": {
+     *                         {
+     *                             "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
+     *                             "id": "1",
+     *                         },
      *                     }
      *                 },
      *                 type="object",
@@ -136,9 +142,11 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                 @OA\Property(property="active", type="string"),
      *                 @OA\Property(property="position", type="int"),
      *                 @OA\Property(property="brief", type="string"),
-     *                 @OA\Property(property="contact", type="object",
-     *                     @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
-     *                     @OA\Property(property="id", type="string", default="1"),
+     *                 @OA\Property(property="contacts", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
      *                 ),
      *             )
      *         )
@@ -253,7 +261,23 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *         @OA\Schema(
      *             type="string",
      *         )
-     *     )
+     *     ),
+     *     @OA\Parameter(
+     *         description="contact title",
+     *         in="query",
+     *         name="contact[title]",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         description="contact active",
+     *         in="query",
+     *         name="contact[active]",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
      * )
      * @OA\Response(response=200, description="Return contact group")
      *

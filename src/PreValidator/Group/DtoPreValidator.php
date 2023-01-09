@@ -23,7 +23,6 @@ class DtoPreValidator extends AbstractPreValidator implements DtoPreValidatorInt
     public function onPost(DtoInterface $dto): void
     {
         $this
-//            ->checkContact($dto)
             ->checkPosition($dto)
             ->checkBrief($dto);
     }
@@ -31,7 +30,6 @@ class DtoPreValidator extends AbstractPreValidator implements DtoPreValidatorInt
     public function onPut(DtoInterface $dto): void
     {
         $this
-//            ->checkContact($dto)
             ->checkId($dto)
             ->checkPosition($dto)
             ->checkBrief($dto)
@@ -42,16 +40,6 @@ class DtoPreValidator extends AbstractPreValidator implements DtoPreValidatorInt
     {
         $this
             ->checkId($dto);
-    }
-
-    private function checkContact(DtoInterface $dto): self
-    {
-        /** @var GroupApiDtoInterface $dto */
-        if (!$dto->hasContactApiDto()) {
-            throw new GroupInvalidException('The Dto has\'t contact');
-        }
-
-        return $this;
     }
 
     private function checkActive(DtoInterface $dto): self
