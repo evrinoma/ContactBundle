@@ -46,6 +46,7 @@ class EvrinomaContactExtension extends Extension
     public const ENTITY_BASE_CONTACT = BaseContact::class;
     public const ENTITY_BASE_GROUP = BaseGroup::class;
     public const DTO_BASE_CONTACT = ContactApiDto::class;
+    public const DTO_BASE_GROUP = GroupApiDto::class;
     public const HANDLER = BaseHandler::class;
 
     /**
@@ -127,8 +128,8 @@ class EvrinomaContactExtension extends Extension
             $this->wireRepository($container, $registry, GroupQueryMediatorInterface::class, 'group', $config['entity_group'], $config['db_driver']);
         }
 
-        $this->wireController($container, 'contact', $config['dto']);
-        $this->wireController($container, 'group', GroupApiDto::class);
+        $this->wireController($container, 'contact', $config['dto_contact']);
+        $this->wireController($container, 'group', $config['dto_group']);
 
         $this->wireValidator($container, 'contact', $config['entity_contact']);
         $this->wireValidator($container, 'group', $config['entity_group']);
@@ -144,11 +145,17 @@ class EvrinomaContactExtension extends Extension
             foreach ($config['decorates'] as $key => $service) {
                 if (null !== $service) {
                     switch ($key) {
-                        case 'command':
-                            $remap['command'] = 'evrinoma.'.$this->getAlias().'.contact.decorates.command';
+                        case 'command_contact':
+                            $remap['command_contact'] = 'evrinoma.'.$this->getAlias().'.contact.decorates.command';
                             break;
-                        case 'query':
-                            $remap['query'] = 'evrinoma.'.$this->getAlias().'.contact.decorates.query';
+                        case 'query_contact':
+                            $remap['query_contact'] = 'evrinoma.'.$this->getAlias().'.contact.decorates.query';
+                            break;
+                        case 'command_group':
+                            $remap['command_group'] = 'evrinoma.'.$this->getAlias().'.group.decorates.command';
+                            break;
+                        case 'query_group':
+                            $remap['query_group'] = 'evrinoma.'.$this->getAlias().'.group.decorates.query';
                             break;
                     }
                 }
@@ -191,8 +198,8 @@ class EvrinomaContactExtension extends Extension
                 case false !== str_contains($key, PropertyContactPass::CONTACT_CONSTRAINT):
                     $definition->addTag(PropertyContactPass::CONTACT_CONSTRAINT);
                     break;
-                case false !== str_contains($key, PropertyGroupPass::FILE_CONSTRAINT):
-                    $definition->addTag(PropertyGroupPass::FILE_CONSTRAINT);
+                case false !== str_contains($key, PropertyGroupPass::GROUP_CONSTRAINT):
+                    $definition->addTag(PropertyGroupPass::GROUP_CONSTRAINT);
                     break;
 //                case false !== strpos($key, ContactPass::CONTACT_CONSTRAINT):
 //                    $definition->addTag(ContactPass::CONTACT_CONSTRAINT);

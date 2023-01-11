@@ -32,6 +32,6 @@ final class GroupApiControllerTest extends AbstractFunctionalTest
 
     public static function getFixtures(): array
     {
-        return [FixtureInterface::FILE_FIXTURES];
+        return [FixtureInterface::GROUP_FIXTURES];
     }
 }

@@ -19,9 +19,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 class GroupPass extends AbstractConstraint implements CompilerPassInterface
 {
-    public const FILE_CONSTRAINT = 'evrinoma.contact.constraint.group.property';
+    public const GROUP_CONSTRAINT = 'evrinoma.contact.constraint.group.property';
 
-    protected static string $alias = self::FILE_CONSTRAINT;
+    protected static string $alias = self::GROUP_CONSTRAINT;
     protected static string $class = GroupValidator::class;
     protected static string $methodCall = 'addPropertyConstraint';
 }

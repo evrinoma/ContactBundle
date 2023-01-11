@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DecoratorPass extends AbstractRecursivePass
 {
-    private array $services = ['contact'];
+    private array $services = ['contact', 'group'];
 
     /**
      * {@inheritDoc}

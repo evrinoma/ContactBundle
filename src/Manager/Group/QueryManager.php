@@ -38,12 +38,12 @@ final class QueryManager implements QueryManagerInterface
     public function criteria(GroupApiDtoInterface $dto): array
     {
         try {
-            $contact = $this->repository->findByCriteria($dto);
+            $group = $this->repository->findByCriteria($dto);
         } catch (GroupNotFoundException $e) {
             throw $e;
         }
 
-        return $contact;
+        return $group;
     }
 
     /**
@@ -57,7 +57,7 @@ final class QueryManager implements QueryManagerInterface
     {
         try {
             if ($dto->hasId()) {
-                $contact = $this->repository->proxy($dto->idToString());
+                $group = $this->repository->proxy($dto->idToString());
             } else {
                 throw new GroupProxyException('Id value is not set while trying get proxy object');
             }
@@ -65,7 +65,7 @@ final class QueryManager implements QueryManagerInterface
             throw $e;
         }
 
-        return $contact;
+        return $group;
     }
 
     /**
@@ -78,11 +78,11 @@ final class QueryManager implements QueryManagerInterface
     public function get(GroupApiDtoInterface $dto): GroupInterface
     {
         try {
-            $contact = $this->repository->find($dto->idToString());
+            $group = $this->repository->find($dto->idToString());
         } catch (GroupNotFoundException $e) {
             throw $e;
         }
 
-        return $contact;
+        return $group;
     }
 }

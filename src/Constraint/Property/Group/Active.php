@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\ContactBundle\Constraint\Property\File;
+namespace Evrinoma\ContactBundle\Constraint\Property\Group;
 
 use Evrinoma\UtilsBundle\Constraint\Property\ActiveTrait;
 use Evrinoma\UtilsBundle\Constraint\Property\ConstraintInterface;
