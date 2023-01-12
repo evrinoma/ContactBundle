@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
+        "evrinoma/address-bundle": "dev-master",
         "evrinoma/dto-bundle": "dev-master",
         "evrinoma/dto-common": "dev-master",
         "evrinoma/utils-bundle": "dev-master"
@@ -51,6 +52,10 @@
         "evrinoma/test-utils-bundle": "dev-master"
     },
     "repositories": {
+        "address": {
+            "type": "vcs",
+            "url": "https://github.com/evrinoma/AddressBundle.git"
+        },
         "dto": {
             "type": "vcs",
             "url": "https://github.com/evrinoma/DtoBundle.git"
