@@ -17,6 +17,7 @@
         "evrinoma/address-bundle": "dev-master",
         "evrinoma/dto-bundle": "dev-master",
         "evrinoma/dto-common": "dev-master",
+        "evrinoma/phone-bundle": "dev-master",
         "evrinoma/utils-bundle": "dev-master"
     },
     "autoload": {
@@ -63,6 +64,10 @@
         "dto-common": {
             "type": "vcs",
             "url": "https://github.com/evrinoma/DtoCommon.git"
+        },
+        "phone": {
+            "type": "vcs",
+            "url": "https://github.com/evrinoma/PhoneBundle.git"
         },
         "test-utils": {
             "type": "vcs",
