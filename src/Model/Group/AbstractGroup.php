@@ -16,6 +16,7 @@ namespace Evrinoma\ContactBundle\Model\Group;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Evrinoma\AddressBundle\Model\Address\AddressInterface;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\BriefTrait;
@@ -45,9 +46,34 @@ abstract class AbstractGroup implements GroupInterface
      */
     protected $contacts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Evrinoma\AddressBundle\Model\Address\AddressInterface")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    protected ?AddressInterface $address = null;
+
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
+    }
+
+    public function getAddress(): AddressInterface
+    {
+        return $this->address;
+    }
+
+    public function resetAddress(): GroupInterface
+    {
+        $this->address = null;
+
+        return $this;
+    }
+
+    public function setAddress(AddressInterface $address): GroupInterface
+    {
+        $this->address = $address;
+
+        return $this;
     }
 
     /**

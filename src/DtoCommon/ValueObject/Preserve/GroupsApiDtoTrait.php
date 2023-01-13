@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve;
 
-use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-trait ContactTrait
+trait GroupsApiDtoTrait
 {
-    public function setContactApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface
+    public function addGroupsApiDto(GroupApiDtoInterface $groupsApiDto): DtoInterface
     {
-        return parent::setContactApiDto($contactApiDto);
+        return parent::addGroupsApiDto($groupsApiDto);
     }
 }

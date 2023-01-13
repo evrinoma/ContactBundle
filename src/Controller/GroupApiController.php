@@ -25,6 +25,7 @@ use Evrinoma\UtilsBundle\Controller\AbstractWrappedApiController;
 use Evrinoma\UtilsBundle\Controller\ApiControllerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,17 +69,25 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                     "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
      *                     "position": "0",
      *                     "title": "bla bla",
+     *                     "address": {
+     *                         "class": "Evrinoma\AddressBundle\Dto\AddressApiDto",
+     *                         "id": "1",
+     *                     },
      *                     "contacts": {
      *                         {
      *                             "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
      *                             "id": "1",
      *                         },
-     *                     }
+     *                     },
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
      *                 @OA\Property(property="position", type="int"),
      *                 @OA\Property(property="brief", type="string"),
+     *                 @OA\Property(property="gallery", type="object",
+     *                     @OA\Property(property="address", type="string", default="Evrinoma\AddressBundle\Dto\AddressApiDto"),
+     *                     @OA\Property(property="id", type="string", default="1"),
+     *                 ),
      *                 @OA\Property(property="contacts", type="array",
      *                     @OA\Items(type="object",
      *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
@@ -129,6 +138,10 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                     "id": "1",
      *                     "active": "b",
      *                     "title": "bla bla",
+     *                     "address": {
+     *                         "class": "Evrinoma\AddressBundle\Dto\AddressApiDto",
+     *                         "id": "1",
+     *                     },
      *                     "contacts": {
      *                         {
      *                             "class": "Evrinoma\ContactBundle\Dto\ContactApiDto",
@@ -142,6 +155,10 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *                 @OA\Property(property="active", type="string"),
      *                 @OA\Property(property="position", type="int"),
      *                 @OA\Property(property="brief", type="string"),
+     *                 @OA\Property(property="gallery", type="object",
+     *                     @OA\Property(property="address", type="string", default="Evrinoma\AddressBundle\Dto\AddressApiDto"),
+     *                     @OA\Property(property="id", type="string", default="1"),
+     *                 ),
      *                 @OA\Property(property="contacts", type="array",
      *                     @OA\Items(type="object",
      *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
@@ -277,6 +294,19 @@ final class GroupApiController extends AbstractWrappedApiController implements A
      *         @OA\Schema(
      *             type="string",
      *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="address[id]",
+     *         in="query",
+     *         description="Group Address",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="string",
+     *                 ref=@Model(type=Evrinoma\AddressBundle\Form\Rest\Address\AddressChoiceType::class, options={"data": "id"})
+     *             ),
+     *         ),
+     *         style="form"
      *     ),
      * )
      * @OA\Response(response=200, description="Return contact group")

@@ -14,21 +14,16 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable;
 
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupTrait as GroupImmutableTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupsApiDtoTrait as GroupsApiDtoImmutableTrait;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-trait GroupTrait
+trait GroupsApiDtoTrait
 {
-    use GroupImmutableTrait;
+    use GroupsApiDtoImmutableTrait;
 
-    /**
-     * @param GroupApiDtoInterface $groupApiDto
-     *
-     * @return DtoInterface
-     */
-    public function setGroupApiDto(GroupApiDtoInterface $groupApiDto): DtoInterface
+    public function addGroupsApiDto(GroupApiDtoInterface $groupsApiDto): DtoInterface
     {
-        $this->groupApiDto = $groupApiDto;
+        $this->groupsApiDto[] = $groupsApiDto;
 
         return $this;
     }

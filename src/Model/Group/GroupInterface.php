@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Model\Group;
 
 use Doctrine\Common\Collections\Collection;
+use Evrinoma\AddressBundle\Model\Address\AddressInterface;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\BriefInterface;
@@ -30,4 +31,10 @@ interface GroupInterface extends ActiveInterface, IdInterface, BriefInterface, C
     public function addContact(ContactInterface $contact): GroupInterface;
 
     public function removeContact(ContactInterface $contact): GroupInterface;
+
+    public function getAddress(): AddressInterface;
+
+    public function resetAddress(): GroupInterface;
+
+    public function setAddress(AddressInterface $address): GroupInterface;
 }

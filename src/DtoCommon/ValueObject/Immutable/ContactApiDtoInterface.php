@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable;
 
-interface ContactsInterface
+use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface as BaseContactApiDtoInterface;
+
+interface ContactApiDtoInterface
 {
-    public const CONTACTS = 'contacts';
+    public const CONTACT = BaseContactApiDtoInterface::CONTACT;
 
-    public function hasContactsApiDto(): bool;
+    public function hasContactApiDto(): bool;
 
-    public function getContactsApiDto(): array;
+    public function getContactApiDto(): BaseContactApiDtoInterface;
 }

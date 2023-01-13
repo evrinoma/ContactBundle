@@ -18,20 +18,14 @@ use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-trait ContactTrait
+trait ContactApiDtoTrait
 {
-    /**
-     * @var ContactApiDtoInterface|null
-     */
     protected ?ContactApiDtoInterface $contactApiDto = null;
 
-    /**
-     * @return \Generator
-     */
     public function genRequestContactApiDto(?Request $request): ?\Generator
     {
         if ($request) {
-            $contact = $request->get(ContactInterface::CONTACT);
+            $contact = $request->get(ContactApiDtoInterface::CONTACT);
             if ($contact) {
                 $newRequest = $this->getCloneRequest();
                 $contact[DtoInterface::DTO_CLASS] = ContactApiDto::class;

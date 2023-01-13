@@ -16,6 +16,7 @@ namespace Evrinoma\ContactBundle\Fixtures;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Evrinoma\AddressBundle\Fixtures\AddressFixtures;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\ContactBundle\Entity\Group\BaseGroup;
 use Evrinoma\TestUtilsBundle\Fixtures\AbstractFixture;
@@ -28,12 +29,14 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
             GroupApiDtoInterface::ACTIVE => 'a',
             GroupApiDtoInterface::POSITION => 1,
             GroupApiDtoInterface::CONTACTS => [4, 3],
+            GroupApiDtoInterface::ADDRESS => 1,
         ],
         [
             GroupApiDtoInterface::BRIEF => 'kzkt',
             GroupApiDtoInterface::ACTIVE => 'a',
             GroupApiDtoInterface::POSITION => 2,
             GroupApiDtoInterface::CONTACTS => [1, 2],
+            GroupApiDtoInterface::ADDRESS => 2,
         ],
         [
             GroupApiDtoInterface::BRIEF => 'c2m',
@@ -46,24 +49,48 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
             GroupApiDtoInterface::ACTIVE => 'd',
             GroupApiDtoInterface::POSITION => 4,
             GroupApiDtoInterface::CONTACTS => [1, 2],
+            GroupApiDtoInterface::ADDRESS => 3,
             ],
         [
             GroupApiDtoInterface::BRIEF => 'nvr',
             GroupApiDtoInterface::ACTIVE => 'b',
             GroupApiDtoInterface::POSITION => 5,
             GroupApiDtoInterface::CONTACTS => [0, 3],
+            GroupApiDtoInterface::ADDRESS => 4,
         ],
         [
             GroupApiDtoInterface::BRIEF => 'nvr2',
             GroupApiDtoInterface::ACTIVE => 'd',
             GroupApiDtoInterface::POSITION => 6,
             GroupApiDtoInterface::CONTACTS => [1, 2],
+            GroupApiDtoInterface::ADDRESS => 5,
             ],
         [
             GroupApiDtoInterface::BRIEF => 'nvr3',
             GroupApiDtoInterface::ACTIVE => 'd',
             GroupApiDtoInterface::POSITION => 7,
             GroupApiDtoInterface::CONTACTS => [2, 4],
+        ],
+        [
+            GroupApiDtoInterface::BRIEF => 'tvr',
+            GroupApiDtoInterface::ACTIVE => 'b',
+            GroupApiDtoInterface::POSITION => 5,
+            GroupApiDtoInterface::CONTACTS => [0, 3],
+            GroupApiDtoInterface::ADDRESS => 6,
+        ],
+        [
+            GroupApiDtoInterface::BRIEF => 'tvr2',
+            GroupApiDtoInterface::ACTIVE => 'd',
+            GroupApiDtoInterface::POSITION => 6,
+            GroupApiDtoInterface::CONTACTS => [1, 2],
+            GroupApiDtoInterface::ADDRESS => 0,
+        ],
+        [
+            GroupApiDtoInterface::BRIEF => 'tvr3',
+            GroupApiDtoInterface::ACTIVE => 'd',
+            GroupApiDtoInterface::POSITION => 7,
+            GroupApiDtoInterface::CONTACTS => [2, 4],
+            GroupApiDtoInterface::ADDRESS => 7,
         ],
     ];
 
@@ -80,6 +107,7 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
     {
         $short = self::getReferenceName();
         $shortContact = ContactFixtures::getReferenceName();
+        $shortAddress = AddressFixtures::getReferenceName();
         $i = 0;
 
         foreach (static::$data as $record) {
@@ -94,6 +122,11 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
             foreach ($record[GroupApiDtoInterface::CONTACTS] as $value) {
                 $entity
                     ->addContact($this->getReference($shortContact.$value));
+            }
+
+            if (\array_key_exists(GroupApiDtoInterface::ADDRESS, $record)) {
+                $entity
+                    ->setAddress($this->getReference($shortAddress.$record[GroupApiDtoInterface::ADDRESS]));
             }
 
             $this->addReference($short.$i, $entity);

@@ -73,6 +73,7 @@ services:
     public: true
     arguments:
       - '@evrinoma.contact.contact.query.manager'
+      - '@evrinoma.address.query.manager'
 
   Evrinoma\ContactBundle\Mediator\Group\CommandMediator:
     alias: evrinoma.contact.group.command.mediator

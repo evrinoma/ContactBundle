@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable;
 
-interface GroupsInterface
+use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface as BaseContactApiDtoInterface;
+
+interface ContactsApiDtoInterface
 {
-    public const GROUPS = 'groups';
+    public const CONTACTS = BaseContactApiDtoInterface::CONTACTS;
 
-    public function hasGroupsApiDto(): bool;
+    public function hasContactsApiDto(): bool;
 
-    public function getGroupsApiDto(): array;
+    public function getContactsApiDto(): array;
 }

@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\ContactsTrait as ContactsImmutableTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\ContactsApiDtoTrait as ContactsApiDtoImmutableTrait;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-trait ContactsTrait
+trait ContactsApiDtoTrait
 {
-    use ContactsImmutableTrait;
+    use ContactsApiDtoImmutableTrait;
 
     public function addContactsApiDto(ContactApiDtoInterface $contactsApiDto): DtoInterface
     {

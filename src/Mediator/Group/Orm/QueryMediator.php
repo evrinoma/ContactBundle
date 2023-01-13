@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Mediator\Group\Orm;
 
+use Evrinoma\AddressBundle\Repository\AliasInterface as AddressAliasInterface;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\ContactBundle\Mediator\Group\QueryMediatorInterface;
 use Evrinoma\ContactBundle\Repository\AliasInterface;
@@ -73,5 +74,10 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
                     ->setParameter('contactTitle', '%'.$dto->getContactApiDto()->getTitle().'%');
             }
         }
+
+        $aliasAddress = AddressAliasInterface::ADDRESS;
+        $builder
+            ->leftJoin($alias.'.address', $aliasAddress)
+            ->addSelect($aliasAddress);
     }
 }

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Mediator\Group;
 
+use Evrinoma\AddressBundle\Manager\QueryManagerInterface as AddressQueryManagerInterface;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeCreatedException;
-use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeRemovedException;
 use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeSavedException;
 use Evrinoma\ContactBundle\Manager\Contact\QueryManagerInterface as ContactQueryManagerInterface;
 use Evrinoma\ContactBundle\Model\Group\GroupInterface;
@@ -25,10 +25,12 @@ use Evrinoma\UtilsBundle\Mediator\AbstractCommandMediator;
 class CommandMediator extends AbstractCommandMediator implements CommandMediatorInterface
 {
     private ContactQueryManagerInterface $contactQueryManager;
+    private AddressQueryManagerInterface $addressQueryManager;
 
-    public function __construct(ContactQueryManagerInterface $contactQueryManager)
+    public function __construct(ContactQueryManagerInterface $contactQueryManager, AddressQueryManagerInterface $addressQueryManager)
     {
         $this->contactQueryManager = $contactQueryManager;
+        $this->addressQueryManager = $addressQueryManager;
     }
 
     public function onUpdate(DtoInterface $dto, $entity): GroupInterface
@@ -47,6 +49,16 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
             throw new GroupCannotBeSavedException($e->getMessage());
         }
 
+        try {
+            if ($dto->hasAddressApiDto()) {
+                $entity->setAddress($this->addressQueryManager->proxy($dto->getAddressApiDto()));
+            } else {
+                $entity->resetAddress();
+            }
+        } catch (\Exception $e) {
+            throw new GroupCannotBeSavedException($e->getMessage());
+        }
+
         $entity
             ->setBrief($dto->getBrief())
             ->setPosition($dto->getPosition())
@@ -58,14 +70,6 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
 
     public function onDelete(DtoInterface $dto, $entity): void
     {
-        try {
-            foreach ($entity->getContacts() as $contact) {
-                $entity->removeContact($contact);
-            }
-        } catch (\Exception $e) {
-            throw new GroupCannotBeRemovedException($e->getMessage());
-        }
-
         $entity
             ->setActiveToDelete();
     }
@@ -80,6 +84,16 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
             }
         } catch (\Exception $e) {
             throw new GroupCannotBeCreatedException($e->getMessage());
+        }
+
+        try {
+            if ($dto->hasAddressApiDto()) {
+                $entity->setAddress($this->addressQueryManager->proxy($dto->getAddressApiDto()));
+            } else {
+                $entity->resetAddress();
+            }
+        } catch (\Exception $e) {
+            throw new GroupCannotBeSavedException($e->getMessage());
         }
 
         $entity

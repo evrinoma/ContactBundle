@@ -1,4 +1,4 @@
-Evrinoma\ContactBundle\Model\Group\AbstractGroup:
+Evrinoma\AddressBundle\Model\Address\AbstractAddress:
   exclusion_policy: ALL
   properties:
     id:
@@ -7,13 +7,15 @@ Evrinoma\ContactBundle\Model\Group\AbstractGroup:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    brief:
+    createdAt:
+      type: DateTimeImmutable<'Y-m-d H:i'>
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    description:
+    updatedAt:
+      type: DateTimeImmutable<'Y-m-d H:i'>
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
@@ -25,21 +27,31 @@ Evrinoma\ContactBundle\Model\Group\AbstractGroup:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    position:
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    contacts:
-      type: ArrayCollection<Evrinoma\ContactBundle\Model\Contact\AbstractContact>
+    town:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
     address:
-      type: Evrinoma\AddressBundle\Model\Address\AbstractAddress
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
+    zip:
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
+    country:
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
+    countryCode:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,

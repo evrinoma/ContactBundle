@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable;
 
-use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-interface ContactsInterface
+interface GroupsApiDtoInterface
 {
-    public function addContactsApiDto(ContactApiDtoInterface $contactApiDto): DtoInterface;
+    public function addGroupsApiDto(GroupApiDtoInterface $groupApiDto): DtoInterface;
 }

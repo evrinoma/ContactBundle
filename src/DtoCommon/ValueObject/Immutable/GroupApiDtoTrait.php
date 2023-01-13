@@ -18,20 +18,14 @@ use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-trait GroupTrait
+trait GroupApiDtoTrait
 {
-    /**
-     * @var GroupApiDtoInterface|null
-     */
     protected ?GroupApiDtoInterface $groupApiDto = null;
 
-    /**
-     * @return \Generator
-     */
     public function genRequestGroupApiDto(?Request $request): ?\Generator
     {
         if ($request) {
-            $group = $request->get(GroupInterface::GROUP);
+            $group = $request->get(GroupApiDtoInterface::GROUP);
             if ($group) {
                 $newRequest = $this->getCloneRequest();
                 $group[DtoInterface::DTO_CLASS] = GroupApiDto::class;

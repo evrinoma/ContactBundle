@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto;
 
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupInterface;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupsInterface;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupApiDtoInterface;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable\GroupsApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\ActiveInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\IdInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\PositionInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\TitleInterface;
 
-interface ContactApiDtoInterface extends DtoInterface, IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupInterface, GroupsInterface
+interface ContactApiDtoInterface extends DtoInterface, IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupApiDtoInterface, GroupsApiDtoInterface
 {
     public const CONTACT = 'contact';
     public const CONTACTS = ContactApiDtoInterface::CONTACT.'s';

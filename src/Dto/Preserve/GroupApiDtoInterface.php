@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto\Preserve;
 
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactInterface;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactsInterface;
+use Evrinoma\AddressBundle\DtoCommon\ValueObject\Mutable\AddressApiDtoInterface;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactsApiDtoInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\BriefInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\IdInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\PositionInterface;
 
-interface GroupApiDtoInterface extends IdInterface, BriefInterface, ActiveInterface, PositionInterface, ContactInterface, ContactsInterface
+interface GroupApiDtoInterface extends IdInterface, BriefInterface, ActiveInterface, PositionInterface, ContactApiDtoInterface, ContactsApiDtoInterface, AddressApiDtoInterface
 {
 }

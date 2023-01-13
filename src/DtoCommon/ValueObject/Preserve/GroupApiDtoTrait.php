@@ -11,12 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable;
+namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve;
 
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-interface GroupsInterface
+trait GroupApiDtoTrait
 {
-    public function addGroupsApiDto(GroupApiDtoInterface $groupApiDto): DtoInterface;
+    public function setGroupApiDto(GroupApiDtoInterface $groupApiDto): DtoInterface
+    {
+        return parent::setGroupApiDto($groupApiDto);
+    }
 }

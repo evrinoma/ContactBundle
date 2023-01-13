@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto\Preserve;
 
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\GroupsTrait;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\GroupTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\GroupApiDtoTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Preserve\GroupsApiDtoTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\ActiveTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\IdTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\PositionTrait;
@@ -23,8 +23,8 @@ use Evrinoma\DtoCommon\ValueObject\Preserve\TitleTrait;
 trait ContactApiDtoTrait
 {
     use ActiveTrait;
-    use GroupsTrait;
-    use GroupTrait;
+    use GroupApiDtoTrait;
+    use GroupsApiDtoTrait;
     use IdTrait;
     use PositionTrait;
     use TitleTrait;

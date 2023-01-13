@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto;
 
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\GroupsTrait;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\GroupTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\GroupApiDtoTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\GroupsApiDtoTrait;
 use Evrinoma\DtoBundle\Annotation\Dto;
 use Evrinoma\DtoBundle\Annotation\Dtos;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
@@ -28,8 +28,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactApiDto extends AbstractDto implements ContactApiDtoInterface
 {
     use ActiveTrait;
-    use GroupsTrait;
-    use GroupTrait;
+    use GroupApiDtoTrait;
+    use GroupsApiDtoTrait;
     use IdTrait;
     use PositionTrait;
     use TitleTrait;

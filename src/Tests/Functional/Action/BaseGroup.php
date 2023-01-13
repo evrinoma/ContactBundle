@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Tests\Functional\Action;
 
+use Evrinoma\AddressBundle\Dto\AddressApiDtoInterface;
+use Evrinoma\AddressBundle\Tests\Functional\Action\BaseAddress;
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Dto\GroupApiDto;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
@@ -50,12 +52,13 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
             GroupApiDtoInterface::BRIEF => Brief::default(),
             GroupApiDtoInterface::POSITION => Position::value(),
             GroupApiDtoInterface::ACTIVE => Active::value(),
+            GroupApiDtoInterface::ADDRESS => BaseAddress::defaultData(),
         ];
     }
 
     public function actionPost(): void
     {
-        $this->createGroup();
+        $created = $this->createGroup();
         $this->testResponseStatusCreated();
     }
 
@@ -78,11 +81,19 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
+        Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
+        Assert::assertArrayHasKey(GroupApiDtoInterface::CONTACTS, $find[PayloadModel::PAYLOAD][0]);
+        Assert::assertCount(2, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::CONTACTS]);
+        Assert::assertArrayHasKey(GroupApiDtoInterface::ADDRESS, $find[PayloadModel::PAYLOAD][0]);
+        Assert::assertArrayHasKey(AddressApiDtoInterface::ADDRESS, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
+        Assert::assertArrayHasKey(AddressApiDtoInterface::COUNTRY, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
+        Assert::assertArrayHasKey(AddressApiDtoInterface::COUNTRY_CODE, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
+        Assert::assertArrayHasKey(AddressApiDtoInterface::TOWN, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
 
         $query = static::withContacts([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::delete()]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
-        Assert::assertCount(3, $find[PayloadModel::PAYLOAD]);
+        Assert::assertCount(5, $find[PayloadModel::PAYLOAD]);
 
         $contact = BaseContact::defaultData();
         $contact[ContactApiDtoInterface::ACTIVE] = Active::block();

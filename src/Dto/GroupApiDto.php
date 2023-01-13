@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\Dto;
 
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactsTrait;
-use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactTrait;
+use Evrinoma\AddressBundle\Dto\AddressApiDtoInterface;
+use Evrinoma\AddressBundle\DtoCommon\ValueObject\Mutable\AddressApiDtoTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactApiDtoTrait;
+use Evrinoma\ContactBundle\DtoCommon\ValueObject\Mutable\ContactsApiDtoTrait;
 use Evrinoma\DtoBundle\Annotation\Dto;
 use Evrinoma\DtoBundle\Annotation\Dtos;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
@@ -28,11 +30,19 @@ use Symfony\Component\HttpFoundation\Request;
 class GroupApiDto extends AbstractDto implements GroupApiDtoInterface
 {
     use ActiveTrait;
+    use AddressApiDtoTrait;
     use BriefTrait;
-    use ContactsTrait;
-    use ContactTrait;
+    use ContactApiDtoTrait;
+    use ContactsApiDtoTrait;
     use IdTrait;
     use PositionTrait;
+
+    /**
+     * @Dto(class="Evrinoma\AddressBundle\Dto\AddressApiDto", generator="genRequestAddressApiDto")
+     *
+     * @var AddressApiDtoInterface|null
+     */
+    protected ?AddressApiDtoInterface $addressApiDto = null;
 
     /**
      * @Dto(class="Evrinoma\ContactBundle\Dto\ContactApiDto", generator="genRequestContactApiDto")

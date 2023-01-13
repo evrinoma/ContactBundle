@@ -13,36 +13,32 @@ declare(strict_types=1);
 
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable;
 
-use Evrinoma\ContactBundle\Dto\GroupApiDto;
-use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
+use Evrinoma\ContactBundle\Dto\ContactApiDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-trait GroupsTrait
+trait ContactsApiDtoTrait
 {
-    /**
-     * @var GroupApiDtoInterface []
-     */
-    protected array $groupsApiDto = [];
+    protected array $contactsApiDto = [];
 
-    public function hasGroupsApiDto(): bool
+    public function hasContactsApiDto(): bool
     {
-        return 0 !== \count($this->groupsApiDto);
+        return 0 !== \count($this->contactsApiDto);
     }
 
-    public function getGroupsApiDto(): array
+    public function getContactsApiDto(): array
     {
-        return $this->groupsApiDto;
+        return $this->contactsApiDto;
     }
 
-    public function genRequestGroupsApiDto(?Request $request): ?\Generator
+    public function genRequestContactsApiDto(?Request $request): ?\Generator
     {
         if ($request) {
-            $entities = $request->get(GroupsInterface::GROUPS);
+            $entities = $request->get(ContactsApiDtoInterface::CONTACTS);
             if ($entities) {
                 foreach ($entities as $entity) {
                     $newRequest = $this->getCloneRequest();
-                    $entity[DtoInterface::DTO_CLASS] = GroupApiDto::class;
+                    $entity[DtoInterface::DTO_CLASS] = ContactApiDto::class;
                     $newRequest->request->add($entity);
 
                     yield $newRequest;

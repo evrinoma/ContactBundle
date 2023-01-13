@@ -1,3 +1,25 @@
+# Installation
+
+Добавить в kernel
+
+    Evrinoma\ContactBundle\EvrinomaContactBundle::class => ['all' => true],
+    Evrinoma\AddressBundle\EvrinomaAddressBundle::class => ['all' => true],
+
+Добавить в routes
+
+    contact:
+        resource: "@EvrinomaContactBundle/Resources/config/routes.yml"
+    address:
+        resource: "@EvrinomaAddressBundle/Resources/config/routes.yml"
+
+Добавить в composer
+
+    composer config repositories.dto vcs https://github.com/evrinoma/DtoBundle.git
+    composer config repositories.dto-common vcs https://github.com/evrinoma/DtoCommonBundle.git
+    composer config repositories.utils vcs https://github.com/evrinoma/UtilsBundle.git
+
+    composer config repositories.address vcs https://github.com/evrinoma/AddressBundle.git
+
 # Configuration
 
 преопределение штатного класса сущности
