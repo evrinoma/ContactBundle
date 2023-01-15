@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDto;
-use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface as BaseContactApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 trait ContactApiDtoTrait
 {
-    protected ?ContactApiDtoInterface $contactApiDto = null;
+    protected ?BaseContactApiDtoInterface $contactApiDto = null;
 
     public function genRequestContactApiDto(?Request $request): ?\Generator
     {
@@ -41,7 +41,7 @@ trait ContactApiDtoTrait
         return null !== $this->contactApiDto;
     }
 
-    public function getContactApiDto(): ContactApiDtoInterface
+    public function getContactApiDto(): BaseContactApiDtoInterface
     {
         return $this->contactApiDto;
     }

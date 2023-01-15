@@ -14,21 +14,24 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Mediator\Contact;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
+use Evrinoma\ContactBundle\Exception\Contact\ContactCannotBeCreatedException;
 use Evrinoma\ContactBundle\Exception\Contact\ContactCannotBeRemovedException;
-use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeCreatedException;
-use Evrinoma\ContactBundle\Exception\Group\GroupCannotBeSavedException;
+use Evrinoma\ContactBundle\Exception\Contact\ContactCannotBeSavedException;
 use Evrinoma\ContactBundle\Manager\Group\QueryManagerInterface as GroupQueryManagerInterface;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\PhoneBundle\Manager\QueryManagerInterface as PhoneQueryManagerInterface;
 use Evrinoma\UtilsBundle\Mediator\AbstractCommandMediator;
 
 class CommandMediator extends AbstractCommandMediator implements CommandMediatorInterface
 {
     private GroupQueryManagerInterface $groupQueryManager;
+    private PhoneQueryManagerInterface $phoneQueryManager;
 
-    public function __construct(GroupQueryManagerInterface $groupQueryManager)
+    public function __construct(GroupQueryManagerInterface $groupQueryManager, PhoneQueryManagerInterface $phoneQueryManager)
     {
         $this->groupQueryManager = $groupQueryManager;
+        $this->phoneQueryManager = $phoneQueryManager;
     }
 
     public function onUpdate(DtoInterface $dto, $entity): ContactInterface
@@ -43,7 +46,21 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
                 $entity->addGroup($this->groupQueryManager->proxy($groupApiDto));
             }
         } catch (\Exception $e) {
-            throw new GroupCannotBeSavedException($e->getMessage());
+            throw new ContactCannotBeSavedException($e->getMessage());
+        }
+
+        if ($dto->hasPhonesApiDto()) {
+            try {
+                foreach ($entity->getPhones() as $phone) {
+                    $entity->removePhone($phone);
+                }
+
+                foreach ($dto->getPhonesApiDto() as $phoneApiDto) {
+                    $entity->addPhone($this->phoneQueryManager->proxy($phoneApiDto));
+                }
+            } catch (\Exception $e) {
+                throw new ContactCannotBeSavedException($e->getMessage());
+            }
         }
 
         $entity
@@ -61,6 +78,10 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
             foreach ($entity->getGroups() as $group) {
                 $entity->removeGroup($group);
             }
+
+            foreach ($entity->getPhones() as $phone) {
+                $entity->removePhone($phone);
+            }
         } catch (\Exception $e) {
             throw new ContactCannotBeRemovedException($e->getMessage());
         }
@@ -77,7 +98,21 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
                 $entity->addGroup($this->groupQueryManager->proxy($groupApiDto));
             }
         } catch (\Exception $e) {
-            throw new GroupCannotBeCreatedException($e->getMessage());
+            throw new ContactCannotBeCreatedException($e->getMessage());
+        }
+
+        if ($dto->hasPhonesApiDto()) {
+            try {
+                foreach ($entity->getPhones() as $phone) {
+                    $entity->removePhone($phone);
+                }
+
+                foreach ($dto->getPhonesApiDto() as $phoneApiDto) {
+                    $entity->addPhone($this->phoneQueryManager->proxy($phoneApiDto));
+                }
+            } catch (\Exception $e) {
+                throw new ContactCannotBeCreatedException($e->getMessage());
+            }
         }
 
         $entity

@@ -17,6 +17,7 @@ use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Mediator\Contact\QueryMediatorInterface;
 use Evrinoma\ContactBundle\Repository\AliasInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\PhoneBundle\Repository\AliasInterface as PhoneAliasInterface;
 use Evrinoma\UtilsBundle\Mediator\AbstractQueryMediator;
 use Evrinoma\UtilsBundle\Mediator\Orm\QueryMediatorTrait;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
@@ -78,5 +79,10 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
                     ->setParameter('groupBrief', $dto->getGroupApiDto()->getBrief());
             }
         }
+
+        $aliasgPhones = PhoneAliasInterface::PHONES;
+        $builder
+            ->leftJoin($alias.'.phones', $aliasgPhones)
+            ->addSelect($aliasgPhones);
     }
 }

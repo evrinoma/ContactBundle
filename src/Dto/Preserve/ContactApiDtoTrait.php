@@ -19,6 +19,7 @@ use Evrinoma\DtoCommon\ValueObject\Preserve\ActiveTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\IdTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\PositionTrait;
 use Evrinoma\DtoCommon\ValueObject\Preserve\TitleTrait;
+use Evrinoma\PhoneBundle\DtoCommon\ValueObject\Preserve\PhonesApiDtoTrait;
 
 trait ContactApiDtoTrait
 {
@@ -26,6 +27,7 @@ trait ContactApiDtoTrait
     use GroupApiDtoTrait;
     use GroupsApiDtoTrait;
     use IdTrait;
+    use PhonesApiDtoTrait;
     use PositionTrait;
     use TitleTrait;
 }

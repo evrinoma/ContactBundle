@@ -1,4 +1,4 @@
-Evrinoma\ContactBundle\Model\Contact\AbstractContact:
+Evrinoma\PhoneBundle\Model\Phone\AbstractPhone:
   exclusion_policy: ALL
   properties:
     id:
@@ -21,39 +21,25 @@ Evrinoma\ContactBundle\Model\Contact\AbstractContact:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    active:
+    number:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    title:
+    country:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
-    position:
+    code:
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
     description:
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    groups:
-      type: ArrayCollection<Evrinoma\ContactBundle\Model\Group\AbstractGroup>
-      groups: [
-          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
-          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
-      ]
-      expose: true
-    phones:
-      type: ArrayCollection<Evrinoma\PhoneBundle\Model\Phone\AbstractPhone>
       groups: [
           API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,

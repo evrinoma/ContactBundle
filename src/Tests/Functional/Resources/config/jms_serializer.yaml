@@ -7,3 +7,6 @@ jms_serializer:
       ContactBundle:
         namespace_prefix: "Evrinoma\\ContactBundle"
         path: '%kernel.root_dir%/Resources/config/serializer/ContactBundle'
+      PhoneBundle:
+        namespace_prefix: "Evrinoma\\PhoneBundle"
+        path: '%kernel.root_dir%/Resources/config/serializer/PhoneBundle'

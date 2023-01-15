@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\ContactBundle\Model\Group\GroupInterface;
+use Evrinoma\PhoneBundle\Model\Phone\PhoneInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtTrait;
 use Evrinoma\UtilsBundle\Entity\IdTrait;
@@ -45,9 +46,22 @@ abstract class AbstractContact implements ContactInterface
      */
     protected $groups;
 
+    /**
+     * @var ArrayCollection|PhoneInterface[]
+     *
+     * @ORM\ManyToMany(targetEntity="Evrinoma\PhoneBundle\Model\Phone\PhoneInterface")
+     * @ORM\JoinTable(
+     *     name="e_contact_contacts_phones",
+     *     joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="phone_id", referencedColumnName="id")}
+     * )
+     */
+    protected $phones;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+        $this->phones = new ArrayCollection();
     }
 
     /**
@@ -70,6 +84,30 @@ abstract class AbstractContact implements ContactInterface
     public function removeGroup(GroupInterface $group): ContactInterface
     {
         $this->groups->removeElement($group);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PhoneInterface[]
+     */
+    public function getPhones(): Collection
+    {
+        return $this->phones;
+    }
+
+    public function addPhone(PhoneInterface $phone): ContactInterface
+    {
+        if (!$this->phones->contains($phone)) {
+            $this->phones[] = $phone;
+        }
+
+        return $this;
+    }
+
+    public function removePhone(PhoneInterface $phone): ContactInterface
+    {
+        $this->phones->removeElement($phone);
 
         return $this;
     }

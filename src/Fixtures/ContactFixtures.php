@@ -18,6 +18,8 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Entity\Contact\BaseContact;
+use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
+use Evrinoma\PhoneBundle\Fixtures\PhoneFixtures;
 use Evrinoma\TestUtilsBundle\Fixtures\AbstractFixture;
 
 class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, OrderedFixtureInterface
@@ -27,31 +29,37 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
             ContactApiDtoInterface::TITLE => 'ite',
             ContactApiDtoInterface::POSITION => 1,
             ContactApiDtoInterface::ACTIVE => 'a',
+            ContactApiDtoInterface::PHONES => [0, 1],
         ],
         [
             ContactApiDtoInterface::TITLE => 'kzkt',
             ContactApiDtoInterface::POSITION => 2,
             ContactApiDtoInterface::ACTIVE => 'a',
+            ContactApiDtoInterface::PHONES => [2, 3],
         ],
         [
             ContactApiDtoInterface::TITLE => 'c2m',
             ContactApiDtoInterface::POSITION => 3,
             ContactApiDtoInterface::ACTIVE => 'a',
+            ContactApiDtoInterface::PHONES => [4, 5],
         ],
         [
             ContactApiDtoInterface::TITLE => 'kzkt2',
             ContactApiDtoInterface::POSITION => 1,
             ContactApiDtoInterface::ACTIVE => 'd',
+            ContactApiDtoInterface::PHONES => [6, 7],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr',
             ContactApiDtoInterface::POSITION => 2,
             ContactApiDtoInterface::ACTIVE => 'b',
+            ContactApiDtoInterface::PHONES => [0, 1],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr2',
             ContactApiDtoInterface::POSITION => 3,
             ContactApiDtoInterface::ACTIVE => 'd',
+            ContactApiDtoInterface::PHONES => [2, 3],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr3',
@@ -72,9 +80,11 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
     protected function create(ObjectManager $manager): self
     {
         $short = self::getReferenceName();
+        $shortPhone = PhoneFixtures::getReferenceName();
         $i = 0;
 
         foreach (static::$data as $record) {
+            /** @var ContactInterface $entity */
             $entity = new static::$class();
             $entity
                 ->setActive($record[ContactApiDtoInterface::ACTIVE])
@@ -82,6 +92,13 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
                 ->setPosition($record[ContactApiDtoInterface::POSITION])
                 ->setCreatedAt(new \DateTimeImmutable())
             ;
+
+            if (\array_key_exists(ContactApiDtoInterface::PHONES, $record)) {
+                foreach ($record[ContactApiDtoInterface::PHONES] as $value) {
+                    $entity
+                        ->addPhone($this->getReference($shortPhone.$value));
+                }
+            }
 
             $this->addReference($short.$i, $entity);
             $manager->persist($entity);

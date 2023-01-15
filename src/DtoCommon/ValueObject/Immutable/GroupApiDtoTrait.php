@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\DtoCommon\ValueObject\Immutable;
 
 use Evrinoma\ContactBundle\Dto\GroupApiDto;
-use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
+use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface as BaseGroupApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 trait GroupApiDtoTrait
 {
-    protected ?GroupApiDtoInterface $groupApiDto = null;
+    protected ?BaseGroupApiDtoInterface $groupApiDto = null;
 
     public function genRequestGroupApiDto(?Request $request): ?\Generator
     {
@@ -41,7 +41,7 @@ trait GroupApiDtoTrait
         return null !== $this->groupApiDto;
     }
 
-    public function getGroupApiDto(): GroupApiDtoInterface
+    public function getGroupApiDto(): BaseGroupApiDtoInterface
     {
         return $this->groupApiDto;
     }

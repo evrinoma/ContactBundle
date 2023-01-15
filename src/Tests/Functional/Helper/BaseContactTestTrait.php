@@ -15,6 +15,7 @@ namespace Evrinoma\ContactBundle\Tests\Functional\Helper;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Tests\Functional\Action\BaseGroup;
+use Evrinoma\PhoneBundle\Tests\Functional\Action\BasePhone;
 use Evrinoma\UtilsBundle\Model\Rest\PayloadModel;
 use PHPUnit\Framework\Assert;
 
@@ -30,6 +31,13 @@ trait BaseContactTestTrait
         return $find;
     }
 
+    protected static function withPhones(array $query): array
+    {
+        $query[ContactApiDtoInterface::PHONES] = [BasePhone::defaultData()];
+
+        return $query;
+    }
+
     protected static function withGroups(array $query): array
     {
         $query[ContactApiDtoInterface::GROUPS] = [BaseGroup::defaultData()];
@@ -37,9 +45,14 @@ trait BaseContactTestTrait
         return $query;
     }
 
+    protected static function withWrappedDefaultData(array $query): array
+    {
+        return static::withPhones(static::withGroups($query));
+    }
+
     protected function createContact(): array
     {
-        $query = static::withGroups(static::getDefault());
+        $query = static::withWrappedDefaultData(static::getDefault());
 
         return $this->post($query);
     }
@@ -53,7 +66,7 @@ trait BaseContactTestTrait
 
     protected function createConstraintBlankTitle(): array
     {
-        $query = static::withGroups(static::getDefault([ContactApiDtoInterface::TITLE => '']));
+        $query = static::withWrappedDefaultData(static::getDefault([ContactApiDtoInterface::TITLE => '']));
 
         return $this->post($query);
     }

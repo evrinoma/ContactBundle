@@ -37,16 +37,21 @@ trait BaseGroupTestTrait
         return $query;
     }
 
+    protected static function withWrappedDefaultData(array $query): array
+    {
+        return static::withContacts($query);
+    }
+
     protected function createGroup(): array
     {
-        $query = static::withContacts(static::getDefault());
+        $query = static::withWrappedDefaultData(static::getDefault());
 
         return $this->post($query);
     }
 
     protected function createConstraintBlankBrief(): array
     {
-        $query = static::withContacts(static::getDefault([GroupApiDtoInterface::BRIEF => '']));
+        $query = static::withWrappedDefaultData(static::getDefault([GroupApiDtoInterface::BRIEF => '']));
 
         return $this->post($query);
     }

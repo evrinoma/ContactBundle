@@ -15,6 +15,7 @@ namespace Evrinoma\ContactBundle\Tests\Functional\Controller;
 
 use Evrinoma\AddressBundle\Fixtures\FixtureInterface as AddressFixtureInterface;
 use Evrinoma\ContactBundle\Fixtures\FixtureInterface;
+use Evrinoma\PhoneBundle\Fixtures\FixtureInterface as PhoneFixtureInterface;
 use Evrinoma\TestUtilsBundle\Action\ActionTestInterface;
 use Evrinoma\TestUtilsBundle\Functional\Orm\AbstractFunctionalTest;
 use Psr\Container\ContainerInterface;
@@ -33,6 +34,6 @@ final class ContactApiControllerTest extends AbstractFunctionalTest
 
     public static function getFixtures(): array
     {
-        return [FixtureInterface::CONTACT_FIXTURES, AddressFixtureInterface::ADDRESS_FIXTURES];
+        return [FixtureInterface::CONTACT_FIXTURES, AddressFixtureInterface::ADDRESS_FIXTURES, PhoneFixtureInterface::PHONE_FIXTURES];
     }
 }

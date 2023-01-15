@@ -20,8 +20,9 @@ use Evrinoma\DtoCommon\ValueObject\Immutable\ActiveInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\IdInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\PositionInterface;
 use Evrinoma\DtoCommon\ValueObject\Immutable\TitleInterface;
+use Evrinoma\PhoneBundle\DtoCommon\ValueObject\Immutable\PhonesApiDtoInterface;
 
-interface ContactApiDtoInterface extends DtoInterface, IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupApiDtoInterface, GroupsApiDtoInterface
+interface ContactApiDtoInterface extends DtoInterface, IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupApiDtoInterface, GroupsApiDtoInterface, PhonesApiDtoInterface
 {
     public const CONTACT = 'contact';
     public const CONTACTS = ContactApiDtoInterface::CONTACT.'s';
