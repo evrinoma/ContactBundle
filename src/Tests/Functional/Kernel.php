@@ -16,6 +16,7 @@ namespace Evrinoma\ContactBundle\Tests\Functional;
 use Evrinoma\AddressBundle\EvrinomaAddressBundle;
 use Evrinoma\ContactBundle\EvrinomaContactBundle;
 use Evrinoma\DtoBundle\EvrinomaDtoBundle;
+use Evrinoma\MailBundle\EvrinomaMailBundle;
 use Evrinoma\PhoneBundle\EvrinomaPhoneBundle;
 use Evrinoma\TestUtilsBundle\Kernel\AbstractApiKernel;
 
@@ -36,6 +37,7 @@ class Kernel extends AbstractApiKernel
             parent::registerBundles(), [
                 new EvrinomaDtoBundle(),
                 new EvrinomaAddressBundle(),
+                new EvrinomaMailBundle(),
                 new EvrinomaPhoneBundle(),
                 new EvrinomaContactBundle(),
             ]

@@ -15,6 +15,7 @@ namespace Evrinoma\ContactBundle\Tests\Functional\Helper;
 
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Tests\Functional\Action\BaseGroup;
+use Evrinoma\MailBundle\Tests\Functional\Action\BaseMail;
 use Evrinoma\PhoneBundle\Tests\Functional\Action\BasePhone;
 use Evrinoma\UtilsBundle\Model\Rest\PayloadModel;
 use PHPUnit\Framework\Assert;
@@ -29,6 +30,13 @@ trait BaseContactTestTrait
         $this->checkResult($find);
 
         return $find;
+    }
+
+    protected static function withMails(array $query): array
+    {
+        $query[ContactApiDtoInterface::MAILS] = [BaseMail::defaultData()];
+
+        return $query;
     }
 
     protected static function withPhones(array $query): array
@@ -47,7 +55,7 @@ trait BaseContactTestTrait
 
     protected static function withWrappedDefaultData(array $query): array
     {
-        return static::withPhones(static::withGroups($query));
+        return static::withMails(static::withPhones(static::withGroups($query)));
     }
 
     protected function createContact(): array

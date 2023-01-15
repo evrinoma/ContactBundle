@@ -20,17 +20,20 @@ use Evrinoma\ContactBundle\Exception\Contact\ContactCannotBeSavedException;
 use Evrinoma\ContactBundle\Manager\Group\QueryManagerInterface as GroupQueryManagerInterface;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\MailBundle\Manager\QueryManagerInterface as MailQueryManagerInterface;
 use Evrinoma\PhoneBundle\Manager\QueryManagerInterface as PhoneQueryManagerInterface;
 use Evrinoma\UtilsBundle\Mediator\AbstractCommandMediator;
 
 class CommandMediator extends AbstractCommandMediator implements CommandMediatorInterface
 {
     private GroupQueryManagerInterface $groupQueryManager;
+    private MailQueryManagerInterface $mailQueryManager;
     private PhoneQueryManagerInterface $phoneQueryManager;
 
-    public function __construct(GroupQueryManagerInterface $groupQueryManager, PhoneQueryManagerInterface $phoneQueryManager)
+    public function __construct(GroupQueryManagerInterface $groupQueryManager, PhoneQueryManagerInterface $phoneQueryManager, MailQueryManagerInterface $mailQueryManager)
     {
         $this->groupQueryManager = $groupQueryManager;
+        $this->mailQueryManager = $mailQueryManager;
         $this->phoneQueryManager = $phoneQueryManager;
     }
 
@@ -63,6 +66,20 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
             }
         }
 
+        if ($dto->hasMailsApiDto()) {
+            try {
+                foreach ($entity->getMails() as $mail) {
+                    $entity->removeMail($mail);
+                }
+
+                foreach ($dto->getMailsApiDto() as $mailApiDto) {
+                    $entity->addMail($this->mailQueryManager->proxy($mailApiDto));
+                }
+            } catch (\Exception $e) {
+                throw new ContactCannotBeSavedException($e->getMessage());
+            }
+        }
+
         $entity
             ->setTitle($dto->getTitle())
             ->setPosition($dto->getPosition())
@@ -81,6 +98,10 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
 
             foreach ($entity->getPhones() as $phone) {
                 $entity->removePhone($phone);
+            }
+
+            foreach ($entity->getMails() as $mail) {
+                $entity->removeMail($mail);
             }
         } catch (\Exception $e) {
             throw new ContactCannotBeRemovedException($e->getMessage());
@@ -109,6 +130,20 @@ class CommandMediator extends AbstractCommandMediator implements CommandMediator
 
                 foreach ($dto->getPhonesApiDto() as $phoneApiDto) {
                     $entity->addPhone($this->phoneQueryManager->proxy($phoneApiDto));
+                }
+            } catch (\Exception $e) {
+                throw new ContactCannotBeCreatedException($e->getMessage());
+            }
+        }
+
+        if ($dto->hasMailsApiDto()) {
+            try {
+                foreach ($entity->getMails() as $mail) {
+                    $entity->removeMail($mail);
+                }
+
+                foreach ($dto->getMailsApiDto() as $mailApiDto) {
+                    $entity->addMail($this->mailQueryManager->proxy($mailApiDto));
                 }
             } catch (\Exception $e) {
                 throw new ContactCannotBeCreatedException($e->getMessage());

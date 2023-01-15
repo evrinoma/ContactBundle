@@ -74,6 +74,7 @@ services:
     arguments:
       - '@evrinoma.contact.group.query.manager'
       - '@evrinoma.phone.query.manager'
+      - '@evrinoma.mail.query.manager'
 
   Evrinoma\ContactBundle\Mediator\Contact\CommandMediator:
     alias: evrinoma.contact.contact.command.mediator

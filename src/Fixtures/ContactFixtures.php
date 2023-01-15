@@ -19,6 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 use Evrinoma\ContactBundle\Dto\ContactApiDtoInterface;
 use Evrinoma\ContactBundle\Entity\Contact\BaseContact;
 use Evrinoma\ContactBundle\Model\Contact\ContactInterface;
+use Evrinoma\MailBundle\Fixtures\MailFixtures;
 use Evrinoma\PhoneBundle\Fixtures\PhoneFixtures;
 use Evrinoma\TestUtilsBundle\Fixtures\AbstractFixture;
 
@@ -30,36 +31,42 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
             ContactApiDtoInterface::POSITION => 1,
             ContactApiDtoInterface::ACTIVE => 'a',
             ContactApiDtoInterface::PHONES => [0, 1],
+            ContactApiDtoInterface::MAILS => [0, 1],
         ],
         [
             ContactApiDtoInterface::TITLE => 'kzkt',
             ContactApiDtoInterface::POSITION => 2,
             ContactApiDtoInterface::ACTIVE => 'a',
             ContactApiDtoInterface::PHONES => [2, 3],
+            ContactApiDtoInterface::MAILS => [2, 3],
         ],
         [
             ContactApiDtoInterface::TITLE => 'c2m',
             ContactApiDtoInterface::POSITION => 3,
             ContactApiDtoInterface::ACTIVE => 'a',
             ContactApiDtoInterface::PHONES => [4, 5],
+            ContactApiDtoInterface::MAILS => [4, 5],
         ],
         [
             ContactApiDtoInterface::TITLE => 'kzkt2',
             ContactApiDtoInterface::POSITION => 1,
             ContactApiDtoInterface::ACTIVE => 'd',
             ContactApiDtoInterface::PHONES => [6, 7],
+            ContactApiDtoInterface::MAILS => [6, 7],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr',
             ContactApiDtoInterface::POSITION => 2,
             ContactApiDtoInterface::ACTIVE => 'b',
             ContactApiDtoInterface::PHONES => [0, 1],
+            ContactApiDtoInterface::MAILS => [0, 1],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr2',
             ContactApiDtoInterface::POSITION => 3,
             ContactApiDtoInterface::ACTIVE => 'd',
             ContactApiDtoInterface::PHONES => [2, 3],
+            ContactApiDtoInterface::MAILS => [2, 3],
         ],
         [
             ContactApiDtoInterface::TITLE => 'nvr3',
@@ -81,6 +88,7 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
     {
         $short = self::getReferenceName();
         $shortPhone = PhoneFixtures::getReferenceName();
+        $shortMail = MailFixtures::getReferenceName();
         $i = 0;
 
         foreach (static::$data as $record) {
@@ -97,6 +105,13 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
                 foreach ($record[ContactApiDtoInterface::PHONES] as $value) {
                     $entity
                         ->addPhone($this->getReference($shortPhone.$value));
+                }
+            }
+
+            if (\array_key_exists(ContactApiDtoInterface::MAILS, $record)) {
+                foreach ($record[ContactApiDtoInterface::MAILS] as $value) {
+                    $entity
+                        ->addMail($this->getReference($shortMail.$value));
                 }
             }
 

@@ -18,7 +18,8 @@
         "evrinoma/dto-bundle": "dev-master",
         "evrinoma/dto-common": "dev-master",
         "evrinoma/phone-bundle": "dev-master",
-        "evrinoma/utils-bundle": "dev-master"
+        "evrinoma/utils-bundle": "dev-master",
+        "evrinoma/mail-bundle": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -64,6 +65,10 @@
         "dto-common": {
             "type": "vcs",
             "url": "https://github.com/evrinoma/DtoCommon.git"
+        },
+        "mail": {
+            "type": "vcs",
+            "url": "https://github.com/evrinoma/MailBundle.git"
         },
         "phone": {
             "type": "vcs",

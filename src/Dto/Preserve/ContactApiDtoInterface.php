@@ -19,8 +19,9 @@ use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\IdInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\PositionInterface;
 use Evrinoma\DtoCommon\ValueObject\Mutable\TitleInterface;
+use Evrinoma\MailBundle\DtoCommon\ValueObject\Mutable\MailsApiDtoInterface;
 use Evrinoma\PhoneBundle\DtoCommon\ValueObject\Mutable\PhonesApiDtoInterface;
 
-interface ContactApiDtoInterface extends IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupApiDtoInterface, GroupsApiDtoInterface, PhonesApiDtoInterface
+interface ContactApiDtoInterface extends IdInterface, TitleInterface, PositionInterface, ActiveInterface, GroupApiDtoInterface, GroupsApiDtoInterface, PhonesApiDtoInterface, MailsApiDtoInterface
 {
 }

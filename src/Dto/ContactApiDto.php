@@ -23,6 +23,8 @@ use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveTrait;
 use Evrinoma\DtoCommon\ValueObject\Mutable\IdTrait;
 use Evrinoma\DtoCommon\ValueObject\Mutable\PositionTrait;
 use Evrinoma\DtoCommon\ValueObject\Mutable\TitleTrait;
+use Evrinoma\MailBundle\Dto\MailApiDtoInterface;
+use Evrinoma\MailBundle\DtoCommon\ValueObject\Mutable\MailsApiDtoTrait;
 use Evrinoma\PhoneBundle\Dto\PhoneApiDtoInterface;
 use Evrinoma\PhoneBundle\DtoCommon\ValueObject\Mutable\PhonesApiDtoTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +35,7 @@ class ContactApiDto extends AbstractDto implements ContactApiDtoInterface
     use GroupApiDtoTrait;
     use GroupsApiDtoTrait;
     use IdTrait;
+    use MailsApiDtoTrait;
     use PhonesApiDtoTrait;
     use PositionTrait;
     use TitleTrait;
@@ -43,6 +46,13 @@ class ContactApiDto extends AbstractDto implements ContactApiDtoInterface
      * @var GroupApiDtoInterface|null
      */
     protected ?GroupApiDtoInterface $groupApiDto = null;
+
+    /**
+     * @Dtos(class="Evrinoma\MailBundle\Dto\MailApiDto", generator="genRequestMailsApiDto", add="addMailsApiDto")
+     *
+     * @var MailApiDtoInterface []
+     */
+    protected array $mailsApiDto = [];
 
     /**
      * @Dtos(class="Evrinoma\PhoneBundle\Dto\PhoneApiDto", generator="genRequestPhonesApiDto", add="addPhonesApiDto")

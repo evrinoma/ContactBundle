@@ -74,7 +74,19 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                             "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
      *                             "id": "1",
      *                         },
-     *                     }
+     *                     },
+     *                     "mails": {
+     *                         {
+     *                             "class": "Evrinoma\MailBundle\Dto\MailApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     },
+     *                     "phones": {
+     *                         {
+     *                             "class": "Evrinoma\PhoneBundle\Dto\PhoneApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     },
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
@@ -83,6 +95,18 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                 @OA\Property(property="groups", type="array",
      *                     @OA\Items(type="object",
      *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="mails", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\MailBundle\Dto\MailApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="phones", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\PhoneBundle\Dto\PhoneApiDto"),
      *                         @OA\Property(property="id", type="string", default="1"),
      *                     )
      *                 ),
@@ -135,7 +159,19 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                             "class": "Evrinoma\ContactBundle\Dto\GroupApiDto",
      *                             "id": "1",
      *                         },
-     *                     }
+     *                     },
+     *                     "mails": {
+     *                         {
+     *                             "class": "Evrinoma\MailBundle\Dto\MailApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     },
+     *                     "phones": {
+     *                         {
+     *                             "class": "Evrinoma\PhoneBundle\Dto\PhoneApiDto",
+     *                             "id": "1",
+     *                         },
+     *                     },
      *                 },
      *                 type="object",
      *                 @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\ContactApiDto"),
@@ -146,6 +182,18 @@ final class ContactApiController extends AbstractWrappedApiController implements
      *                 @OA\Property(property="groups", type="array",
      *                     @OA\Items(type="object",
      *                         @OA\Property(property="class", type="string", default="Evrinoma\ContactBundle\Dto\GroupApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="mails", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\MailBundle\Dto\MailApiDto"),
+     *                         @OA\Property(property="id", type="string", default="1"),
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="phones", type="array",
+     *                     @OA\Items(type="object",
+     *                         @OA\Property(property="class", type="string", default="Evrinoma\PhoneBundle\Dto\PhoneApiDto"),
      *                         @OA\Property(property="id", type="string", default="1"),
      *                     )
      *                 ),

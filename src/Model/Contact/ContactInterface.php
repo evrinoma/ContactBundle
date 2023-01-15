@@ -15,6 +15,7 @@ namespace Evrinoma\ContactBundle\Model\Contact;
 
 use Doctrine\Common\Collections\Collection;
 use Evrinoma\ContactBundle\Model\Group\GroupInterface;
+use Evrinoma\MailBundle\Model\Mail\MailInterface;
 use Evrinoma\PhoneBundle\Model\Phone\PhoneInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtInterface;
@@ -41,4 +42,13 @@ interface ContactInterface extends ActiveInterface, CreateUpdateAtInterface, IdI
     public function addPhone(PhoneInterface $phone): ContactInterface;
 
     public function removePhone(PhoneInterface $phone): ContactInterface;
+
+    /**
+     * @return Collection|MailInterface[]
+     */
+    public function getMails(): Collection;
+
+    public function addMail(MailInterface $mail): ContactInterface;
+
+    public function removeMail(MailInterface $mail): ContactInterface;
 }

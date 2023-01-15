@@ -22,6 +22,7 @@ use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Contact\Id;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Contact\Position;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Contact\Title;
 use Evrinoma\ContactBundle\Tests\Functional\ValueObject\Group\Brief;
+use Evrinoma\MailBundle\Dto\MailApiDtoInterface;
 use Evrinoma\PhoneBundle\Dto\PhoneApiDtoInterface;
 use Evrinoma\TestUtilsBundle\Action\AbstractServiceTest;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
@@ -84,6 +85,8 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
         Assert::assertArrayHasKey(PhoneApiDtoInterface::NUMBER, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::PHONES][0]);
         Assert::assertArrayHasKey(PhoneApiDtoInterface::COUNTRY, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::PHONES][0]);
         Assert::assertArrayHasKey(PhoneApiDtoInterface::CODE, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::PHONES][0]);
+        Assert::assertCount(2, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::MAILS]);
+        Assert::assertArrayHasKey(MailApiDtoInterface::EMAIL, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::MAILS][0]);
 
         $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::delete()]);
         $find = $this->criteria($query);

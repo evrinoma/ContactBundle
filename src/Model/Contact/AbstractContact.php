@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\ContactBundle\Model\Group\GroupInterface;
+use Evrinoma\MailBundle\Model\Mail\MailInterface;
 use Evrinoma\PhoneBundle\Model\Phone\PhoneInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtTrait;
@@ -58,9 +59,22 @@ abstract class AbstractContact implements ContactInterface
      */
     protected $phones;
 
+    /**
+     * @var ArrayCollection|MailInterface[]
+     *
+     * @ORM\ManyToMany(targetEntity="Evrinoma\MailBundle\Model\Mail\MailInterface")
+     * @ORM\JoinTable(
+     *     name="e_contact_contacts_mails",
+     *     joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="mail_id", referencedColumnName="id")}
+     * )
+     */
+    protected $mails;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+        $this->mails = new ArrayCollection();
         $this->phones = new ArrayCollection();
     }
 
@@ -108,6 +122,30 @@ abstract class AbstractContact implements ContactInterface
     public function removePhone(PhoneInterface $phone): ContactInterface
     {
         $this->phones->removeElement($phone);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MailInterface[]
+     */
+    public function getMails(): Collection
+    {
+        return $this->mails;
+    }
+
+    public function addMail(MailInterface $mail): ContactInterface
+    {
+        if (!$this->mails->contains($mail)) {
+            $this->mails[] = $mail;
+        }
+
+        return $this;
+    }
+
+    public function removeMail(MailInterface $mail): ContactInterface
+    {
+        $this->mails->removeElement($mail);
 
         return $this;
     }

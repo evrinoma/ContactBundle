@@ -59,3 +59,10 @@ Evrinoma\ContactBundle\Model\Contact\AbstractContact:
           API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
       ]
       expose: true
+    mails:
+      type: ArrayCollection<Evrinoma\MailBundle\Model\Mail\AbstractMail>
+      groups: [
+          API_GET_CONTACT, API_POST_CONTACT, API_PUT_CONTACT,
+          API_GET_CONTACT_GROUP, API_POST_CONTACT_GROUP, API_PUT_CONTACT_GROUP,
+      ]
+      expose: true
