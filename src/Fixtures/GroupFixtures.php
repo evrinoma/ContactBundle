@@ -129,7 +129,7 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
                     ->setAddress($this->getReference($shortAddress.$record[GroupApiDtoInterface::ADDRESS]));
             }
 
-            $this->expandEntity($entity);
+            $this->expandEntity($entity, $record);
 
             $this->addReference($short.$i, $entity);
             $manager->persist($entity);
