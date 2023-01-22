@@ -91,9 +91,9 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
         $shortMail = MailFixtures::getReferenceName();
         $i = 0;
 
-        foreach (static::$data as $record) {
+        foreach ($this->getData() as $record) {
             /** @var ContactInterface $entity */
-            $entity = new static::$class();
+            $entity = $this->getEntity();
             $entity
                 ->setActive($record[ContactApiDtoInterface::ACTIVE])
                 ->setTitle($record[ContactApiDtoInterface::TITLE])
@@ -114,6 +114,8 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
                         ->addMail($this->getReference($shortMail.$value));
                 }
             }
+
+            $this->expandEntity($entity);
 
             $this->addReference($short.$i, $entity);
             $manager->persist($entity);
