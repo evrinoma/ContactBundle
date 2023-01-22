@@ -21,6 +21,8 @@ trait GroupsApiDtoTrait
 {
     protected array $groupsApiDto = [];
 
+    protected static string $classGroupsApiDto = GroupApiDto::class;
+
     public function hasGroupsApiDto(): bool
     {
         return 0 !== \count($this->groupsApiDto);
@@ -38,7 +40,7 @@ trait GroupsApiDtoTrait
             if ($entities) {
                 foreach ($entities as $entity) {
                     $newRequest = $this->getCloneRequest();
-                    $entity[DtoInterface::DTO_CLASS] = GroupApiDto::class;
+                    $entity[DtoInterface::DTO_CLASS] = static::$classGroupsApiDto;
                     $newRequest->request->add($entity);
 
                     yield $newRequest;

@@ -22,13 +22,15 @@ trait ContactApiDtoTrait
 {
     protected ?BaseContactApiDtoInterface $contactApiDto = null;
 
+    protected static string $classContactApiDto = ContactApiDto::class;
+
     public function genRequestContactApiDto(?Request $request): ?\Generator
     {
         if ($request) {
             $contact = $request->get(ContactApiDtoInterface::CONTACT);
             if ($contact) {
                 $newRequest = $this->getCloneRequest();
-                $contact[DtoInterface::DTO_CLASS] = ContactApiDto::class;
+                $contact[DtoInterface::DTO_CLASS] = static::$classContactApiDto;
                 $newRequest->request->add($contact);
 
                 yield $newRequest;

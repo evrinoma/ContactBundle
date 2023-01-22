@@ -21,6 +21,8 @@ trait ContactsApiDtoTrait
 {
     protected array $contactsApiDto = [];
 
+    protected static string $classContactsApiDto = ContactApiDto::class;
+
     public function hasContactsApiDto(): bool
     {
         return 0 !== \count($this->contactsApiDto);
@@ -38,7 +40,7 @@ trait ContactsApiDtoTrait
             if ($entities) {
                 foreach ($entities as $entity) {
                     $newRequest = $this->getCloneRequest();
-                    $entity[DtoInterface::DTO_CLASS] = ContactApiDto::class;
+                    $entity[DtoInterface::DTO_CLASS] = static::$classContactsApiDto;
                     $newRequest->request->add($entity);
 
                     yield $newRequest;

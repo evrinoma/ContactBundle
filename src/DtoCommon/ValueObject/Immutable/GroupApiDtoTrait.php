@@ -22,13 +22,15 @@ trait GroupApiDtoTrait
 {
     protected ?BaseGroupApiDtoInterface $groupApiDto = null;
 
+    protected static string $classGroupApiDto = GroupApiDto::class;
+
     public function genRequestGroupApiDto(?Request $request): ?\Generator
     {
         if ($request) {
             $group = $request->get(GroupApiDtoInterface::GROUP);
             if ($group) {
                 $newRequest = $this->getCloneRequest();
-                $group[DtoInterface::DTO_CLASS] = GroupApiDto::class;
+                $group[DtoInterface::DTO_CLASS] = static::$classGroupApiDto;
                 $newRequest->request->add($group);
 
                 yield $newRequest;
