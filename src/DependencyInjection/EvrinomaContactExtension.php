@@ -173,11 +173,17 @@ class EvrinomaContactExtension extends Extension
             foreach ($config['services'] as $key => $service) {
                 if (null !== $service) {
                     switch ($key) {
-                        case 'pre_validator':
-                            $remap['pre_validator'] = 'evrinoma.'.$this->getAlias().'.contact.services.pre.validator';
+                        case 'pre_validator_contact':
+                            $remap['pre_validator_contact'] = 'evrinoma.'.$this->getAlias().'.contact.services.pre.validator';
                             break;
-                        case 'handler':
-                            $remap['handler'] = 'evrinoma.'.$this->getAlias().'.contact.services.handler';
+                        case 'handler_contact':
+                            $remap['handler_contact'] = 'evrinoma.'.$this->getAlias().'.contact.services.handler';
+                            break;
+                        case 'pre_validator_group':
+                            $remap['pre_validator_group'] = 'evrinoma.'.$this->getAlias().'.group.services.pre.validator';
+                            break;
+                        case 'handler_group':
+                            $remap['handler_group'] = 'evrinoma.'.$this->getAlias().'.group.services.handler';
                             break;
                     }
                 }

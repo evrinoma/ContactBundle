@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ServicePass extends AbstractRecursivePass
 {
-    private array $services = ['contact'];
+    private array $services = ['contact', 'group'];
 
     /**
      * {@inheritDoc}
@@ -46,13 +46,6 @@ class ServicePass extends AbstractRecursivePass
             $handler = $container->getDefinition($serviceHandler);
             $facade = $container->getDefinition('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.facade');
             $facade->setArgument(4, $handler);
-        }
-        $serviceFileSystem = $container->hasParameter('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.services.system.file_system');
-        if ($serviceFileSystem) {
-            $serviceFileSystem = $container->getParameter('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.services.system.file_system');
-            $fileSystem = $container->getDefinition($serviceFileSystem);
-            $commandMediator = $container->getDefinition('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.command.mediator');
-            $commandMediator->setArgument(0, $fileSystem);
         }
     }
 }

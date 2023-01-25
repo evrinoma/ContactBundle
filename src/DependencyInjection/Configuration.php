@@ -49,12 +49,14 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()
             ->scalarNode('command_contact')->defaultNull()->info('This option is used to command contact decoration')->end()
             ->scalarNode('query_contact')->defaultNull()->info('This option is used to query contact decoration')->end()
-            ->scalarNode('command_group')->defaultNull()->info('This option is used to command contact decoration')->end()
-            ->scalarNode('query_group')->defaultNull()->info('This option is used to query contact decoration')->end()
+            ->scalarNode('command_group')->defaultNull()->info('This option is used to command group decoration')->end()
+            ->scalarNode('query_group')->defaultNull()->info('This option is used to query group decoration')->end()
             ->end()->end()
             ->arrayNode('services')->addDefaultsIfNotSet()->children()
-            ->scalarNode('pre_validator')->defaultNull()->info('This option is used to pre_validator overriding')->end()
-            ->scalarNode('handler')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::HANDLER)->info('This option is used to handler override')->end()
+            ->scalarNode('pre_validator_contact')->defaultNull()->info('This option is used to pre_validator overriding contact')->end()
+            ->scalarNode('handler_contact')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::HANDLER)->info('This option is used to handler override contact')->end()
+            ->scalarNode('pre_validator_group')->defaultNull()->info('This option is used to pre_validator overriding group')->end()
+            ->scalarNode('handler_group')->cannotBeEmpty()->defaultValue(EvrinomaContactExtension::HANDLER)->info('This option is used to handler override group')->end()
             ->end()->end()
             ->end();
 

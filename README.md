@@ -26,18 +26,25 @@
 
     contact:
         db_driver: orm модель данных
-        factory: App\Contact\Factory\ContactFactory фабрика для создания объектов,
+        factory_contact: App\Contact\Factory\ContactFactory фабрика для создания объектов контакта,
                  недостающие значения можно разрешить только на уровне Mediator
-        entity: App\Contact\Entity\Contact сущность
+        factory_group: App\Contact\Factory\GroupFactory фабрика для создания объектов группы,
+                 недостающие значения можно разрешить только на уровне Mediator
+        entity_contact: App\Contact\Entity\Contact сущность контакта
+        entity_group: App\Contact\Entity\Group сущность группы
         constraints: Вкл/выкл проверки полей сущности по умолчанию 
-        dto: App\Contact\Dto\ContactDto класс dto с которым работает сущность
+        dto_contact: App\Contact\Dto\ContactDto класс dto с которым работает сущность контакта
+        dto_group: App\Contact\Dto\GroupDto класс dto с которым работает сущность группы
         decorates:
-          command - декоратор mediator команд контакта
-          query - декоратор mediator запросов контакта
+          command_contact - декоратор mediator команд контакта
+          query_contact - декоратор mediator запросов контакта
+          command_group - декоратор mediator команд группы
+          query_group - декоратор mediator запросов группы
         services:
-          pre_validator - переопределение сервиса валидатора контакта
-          handler - переопределение сервиса обработчика сущностей
-          file_system - переопределение сервиса сохранения файла
+          pre_validator_contact - переопределение сервиса валидатора контакта
+          handler_contact - переопределение сервиса обработчика сущностей
+          pre_validator_group - переопределение сервиса валидатора группы
+          handler_group - переопределение сервиса обработчика группы
 
 # CQRS model
 
@@ -63,6 +70,10 @@ Actions в контроллере разбиты на две группы
     2. API_POST_CONTACT - создание контакта
     3. API_PUT_CONTACT -  редактирование контакта
 
+    4. API_GET_CONTACT_GROUP, API_CRITERIA_CONTACT_GROUP - получение группы
+    5. API_POST_CONTACT_GROUP - создание группы
+    6. API_PUT_CONTACT_GROUP -  редактирование группы
+
 # Статусы:
 
     создание:
@@ -78,6 +89,21 @@ Actions в контроллере разбиты на две группы
         если контакт не уникален UniqueConstraintViolationException возвращает HTTP_CONFLICT 409
         если контакт не прошел валидацию ContactInvalidException возвращает HTTP_UNPROCESSABLE_ENTITY 422
         если контакт не может быть сохранен ContactCannotBeSavedException возвращает HTTP_NOT_IMPLEMENTED 501
+        все остальные ошибки возвращаются как HTTP_BAD_REQUEST 400
+
+    создание:
+        группа создана HTTP_CREATED 201
+    обновление:
+        группа обновлена HTTP_OK 200
+    удаление:
+        группа удалена HTTP_ACCEPTED 202
+    получение:
+        группа найдена HTTP_OK 200
+    ошибки:
+        если группа не найдена ContactNotFoundException возвращает HTTP_NOT_FOUND 404
+        если группа не уникальна UniqueConstraintViolationException возвращает HTTP_CONFLICT 409
+        если группа не прошла валидацию ContactInvalidException возвращает HTTP_UNPROCESSABLE_ENTITY 422
+        если группа не может быть сохранена ContactCannotBeSavedException возвращает HTTP_NOT_IMPLEMENTED 501
         все остальные ошибки возвращаются как HTTP_BAD_REQUEST 400
 
 # Constraint
