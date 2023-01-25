@@ -30,7 +30,7 @@
                  недостающие значения можно разрешить только на уровне Mediator
         entity: App\Contact\Entity\Contact сущность
         constraints: Вкл/выкл проверки полей сущности по умолчанию 
-        dto_class: App\Contact\Dto\ContactDto класс dto с которым работает сущность
+        dto: App\Contact\Dto\ContactDto класс dto с которым работает сущность
         decorates:
           command - декоратор mediator команд контакта
           query - декоратор mediator запросов контакта
