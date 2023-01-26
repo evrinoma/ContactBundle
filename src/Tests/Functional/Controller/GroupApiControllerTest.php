@@ -37,6 +37,7 @@ final class GroupApiControllerTest extends AbstractFunctionalTest
     {
         return [
             FixtureInterface::GROUP_FIXTURES,
+            FixtureInterface::CONTACT_FIXTURES,
             AddressFixtureInterface::ADDRESS_FIXTURES,
             PhoneFixtureInterface::PHONE_FIXTURES,
             MailFixtureInterface::MAIL_FIXTURES,

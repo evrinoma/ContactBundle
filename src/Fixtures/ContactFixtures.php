@@ -128,12 +128,12 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
     public static function getGroups(): array
     {
         return [
-            FixtureInterface::CONTACT_FIXTURES, FixtureInterface::GROUP_FIXTURES,
+            FixtureInterface::CONTACT_FIXTURES,
         ];
     }
 
     public function getOrder()
     {
-        return 0;
+        return 10;
     }
 }

@@ -36,6 +36,7 @@ final class ContactApiControllerTest extends AbstractFunctionalTest
     public static function getFixtures(): array
     {
         return [
+            FixtureInterface::CONTACT_FIXTURES,
             FixtureInterface::GROUP_FIXTURES,
             AddressFixtureInterface::ADDRESS_FIXTURES,
             PhoneFixtureInterface::PHONE_FIXTURES,
