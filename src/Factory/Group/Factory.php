@@ -21,6 +21,11 @@ class Factory implements FactoryInterface
 {
     private static string $entityClass = BaseGroup::class;
 
+    public function __construct(string $entityClass)
+    {
+        self::$entityClass = $entityClass;
+    }
+
     /**
      * @param GroupApiDtoInterface $dto
      *
