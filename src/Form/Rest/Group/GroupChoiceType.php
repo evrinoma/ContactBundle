@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Evrinoma\ContactBundle\Form\Rest\Group;
 
 use Doctrine\DBAL\Exception\TableNotFoundException;
-use Evrinoma\ContactBundle\Dto\GroupApiDto;
 use Evrinoma\ContactBundle\Dto\GroupApiDtoInterface;
 use Evrinoma\ContactBundle\Exception\Group\GroupNotFoundException;
 use Evrinoma\ContactBundle\Manager\Group\QueryManagerInterface;
@@ -25,11 +24,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupChoiceType extends AbstractType
 {
+    protected static string $dtoClass;
+
     private QueryManagerInterface $queryManager;
 
-    public function __construct(QueryManagerInterface $queryManager)
+    public function __construct(QueryManagerInterface $queryManager, string $dtoClass)
     {
         $this->queryManager = $queryManager;
+        static::$dtoClass = $dtoClass;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -38,7 +40,7 @@ class GroupChoiceType extends AbstractType
             $value = [];
             try {
                 if ($options->offsetExists('data')) {
-                    $criteria = $this->queryManager->criteria(new GroupApiDto());
+                    $criteria = $this->queryManager->criteria(new static::$dtoClass());
                     switch ($options->offsetGet('data')) {
                         case GroupApiDtoInterface::BRIEF:
                             foreach ($criteria as $entity) {
