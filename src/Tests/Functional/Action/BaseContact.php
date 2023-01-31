@@ -63,12 +63,20 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
 
     public function actionCriteriaNotFound(): void
     {
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::wrong()]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ACTIVE => Active::wrong(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
 
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ID => Id::value(), ContactApiDtoInterface::ACTIVE => Active::block(), ContactApiDtoInterface::TITLE => Title::wrong()]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ID => Id::value(),
+            ContactApiDtoInterface::ACTIVE => Active::block(),
+            ContactApiDtoInterface::TITLE => Title::wrong(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
@@ -76,7 +84,11 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
 
     public function actionCriteria(): void
     {
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::value(), ContactApiDtoInterface::ID => Id::value()]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ACTIVE => Active::value(),
+            ContactApiDtoInterface::ID => Id::value(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
@@ -88,12 +100,19 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
         Assert::assertCount(2, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::MAILS]);
         Assert::assertArrayHasKey(MailApiDtoInterface::EMAIL, $find[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::MAILS][0]);
 
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::delete()]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ACTIVE => Active::delete(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(3, $find[PayloadModel::PAYLOAD]);
 
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::delete(), ContactApiDtoInterface::TITLE => Title::value()]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ACTIVE => Active::delete(),
+            ContactApiDtoInterface::TITLE => Title::value(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(2, $find[PayloadModel::PAYLOAD]);
@@ -101,7 +120,12 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
         $group = BaseGroup::defaultData();
         $group[GroupApiDtoInterface::ACTIVE] = Active::block();
         $group[GroupApiDtoInterface::BRIEF] = Brief::value();
-        $query = static::withWrappedDefaultData([ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(), ContactApiDtoInterface::ACTIVE => Active::value(), ContactApiDtoInterface::ID => Id::value(), ContactApiDtoInterface::GROUP => $group]);
+        $query = static::withWrappedDefaultData([
+            ContactApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            ContactApiDtoInterface::ACTIVE => Active::value(),
+            ContactApiDtoInterface::ID => Id::value(),
+            ContactApiDtoInterface::GROUP => $group,
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
@@ -125,7 +149,11 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
 
     public function actionPut(): void
     {
-        $query = static::withWrappedDefaultData(static::getDefault([ContactApiDtoInterface::ID => Id::value(), ContactApiDtoInterface::TITLE => Title::value(), ContactApiDtoInterface::POSITION => Position::value()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            ContactApiDtoInterface::ID => Id::value(),
+            ContactApiDtoInterface::TITLE => Title::value(),
+            ContactApiDtoInterface::POSITION => Position::value(),
+        ]));
 
         $find = $this->assertGet(Id::value());
 
@@ -156,14 +184,18 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
 
     public function actionDeleteUnprocessable(): void
     {
-        $response = $this->delete(Id::empty());
+        $response = $this->delete(Id::blank());
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $response);
         $this->testResponseStatusUnprocessable();
     }
 
     public function actionPutNotFound(): void
     {
-        $query = static::withWrappedDefaultData(static::getDefault([ContactApiDtoInterface::ID => Id::wrong(), ContactApiDtoInterface::TITLE => Title::wrong(), ContactApiDtoInterface::POSITION => Position::wrong()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            ContactApiDtoInterface::ID => Id::wrong(),
+            ContactApiDtoInterface::TITLE => Title::wrong(),
+            ContactApiDtoInterface::POSITION => Position::wrong(),
+        ]));
         $this->put($query);
         $this->testResponseStatusNotFound();
     }
@@ -174,12 +206,18 @@ class BaseContact extends AbstractServiceTest implements BaseContactTestInterfac
         $this->testResponseStatusCreated();
         $this->checkResult($created);
 
-        $query = static::withWrappedDefaultData(static::getDefault([ContactApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::ID], ContactApiDtoInterface::TITLE => Title::empty()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            ContactApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::ID],
+            ContactApiDtoInterface::TITLE => Title::blank(),
+        ]));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();
 
-        $query = static::withWrappedDefaultData(static::getDefault([ContactApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::ID], ContactApiDtoInterface::POSITION => Position::empty()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            ContactApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][ContactApiDtoInterface::ID],
+            ContactApiDtoInterface::POSITION => Position::blank(),
+        ]));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();

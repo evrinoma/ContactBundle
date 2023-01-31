@@ -64,12 +64,19 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionCriteriaNotFound(): void
     {
-        $query = static::withWrappedDefaultData([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::wrong()]);
+        $query = static::withWrappedDefaultData([
+            GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            GroupApiDtoInterface::ACTIVE => Active::wrong(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
 
-        $query = static::withWrappedDefaultData([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::ACTIVE => Active::block()]);
+        $query = static::withWrappedDefaultData([
+            GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            GroupApiDtoInterface::ID => Id::value(),
+            GroupApiDtoInterface::ACTIVE => Active::block(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $find);
@@ -77,7 +84,11 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionCriteria(): void
     {
-        $query = static::withWrappedDefaultData([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value()]);
+        $query = static::withWrappedDefaultData([
+            GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            GroupApiDtoInterface::ACTIVE => Active::value(),
+            GroupApiDtoInterface::ID => Id::value(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
@@ -90,7 +101,10 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         Assert::assertArrayHasKey(AddressApiDtoInterface::COUNTRY_CODE, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
         Assert::assertArrayHasKey(AddressApiDtoInterface::TOWN, $find[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ADDRESS]);
 
-        $query = static::withWrappedDefaultData([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::delete()]);
+        $query = static::withWrappedDefaultData([
+            GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            GroupApiDtoInterface::ACTIVE => Active::delete(),
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(5, $find[PayloadModel::PAYLOAD]);
@@ -98,7 +112,12 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $contact = BaseContact::defaultData();
         $contact[ContactApiDtoInterface::ACTIVE] = Active::block();
         $contact[ContactApiDtoInterface::TITLE] = Title::value();
-        $query = static::withWrappedDefaultData([GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(), GroupApiDtoInterface::ACTIVE => Active::value(), GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::CONTACT => $contact]);
+        $query = static::withWrappedDefaultData([
+            GroupApiDtoInterface::DTO_CLASS => static::getDtoClass(),
+            GroupApiDtoInterface::ACTIVE => Active::value(),
+            GroupApiDtoInterface::ID => Id::value(),
+            GroupApiDtoInterface::CONTACT => $contact,
+        ]);
         $find = $this->criteria($query);
         $this->testResponseStatusOK();
         Assert::assertCount(1, $find[PayloadModel::PAYLOAD]);
@@ -122,7 +141,10 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionPut(): void
     {
-        $query = static::withWrappedDefaultData(static::getDefault([GroupApiDtoInterface::ID => Id::value(), GroupApiDtoInterface::BRIEF => Brief::value()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            GroupApiDtoInterface::ID => Id::value(),
+            GroupApiDtoInterface::BRIEF => Brief::value(),
+        ]));
 
         $find = $this->assertGet(Id::value());
 
@@ -153,14 +175,17 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
 
     public function actionDeleteUnprocessable(): void
     {
-        $response = $this->delete(Id::empty());
+        $response = $this->delete(Id::blank());
         Assert::assertArrayHasKey(PayloadModel::PAYLOAD, $response);
         $this->testResponseStatusUnprocessable();
     }
 
     public function actionPutNotFound(): void
     {
-        $query = static::withWrappedDefaultData(static::getDefault([GroupApiDtoInterface::ID => Id::wrong(),            GroupApiDtoInterface::BRIEF => Brief::wrong()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            GroupApiDtoInterface::ID => Id::wrong(),
+            GroupApiDtoInterface::BRIEF => Brief::wrong(),
+        ]));
         $this->put($query);
         $this->testResponseStatusNotFound();
     }
@@ -171,12 +196,18 @@ class BaseGroup extends AbstractServiceTest implements BaseGroupTestInterface
         $this->testResponseStatusCreated();
         $this->checkResult($created);
 
-        $query = static::withWrappedDefaultData(static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::BRIEF => Brief::empty()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID],
+            GroupApiDtoInterface::BRIEF => Brief::blank(),
+        ]));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();
 
-        $query = static::withWrappedDefaultData(static::getDefault([GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID], GroupApiDtoInterface::POSITION => Position::empty()]));
+        $query = static::withWrappedDefaultData(static::getDefault([
+            GroupApiDtoInterface::ID => $created[PayloadModel::PAYLOAD][0][GroupApiDtoInterface::ID],
+            GroupApiDtoInterface::POSITION => Position::blank()]
+        ));
 
         $this->put($query);
         $this->testResponseStatusUnprocessable();
