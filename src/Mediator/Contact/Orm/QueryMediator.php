@@ -81,14 +81,14 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
             }
         }
 
-        $aliasgPhones = PhoneAliasInterface::PHONES;
+        $aliasPhones = PhoneAliasInterface::PHONES;
         $builder
-            ->leftJoin($alias.'.phones', $aliasgPhones)
-            ->addSelect($aliasgPhones);
+            ->leftJoin($alias.'.phones', $aliasPhones)
+            ->addSelect($aliasPhones);
 
-        $aliasgMails = MailAliasInterface::MAILS;
+        $aliasMails = MailAliasInterface::MAILS;
         $builder
-            ->leftJoin($alias.'.mails', $aliasgMails)
-            ->addSelect($aliasgMails);
+            ->leftJoin($alias.'.mails', $aliasMails)
+            ->addSelect($aliasMails);
     }
 }
