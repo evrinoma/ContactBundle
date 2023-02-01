@@ -37,14 +37,13 @@ class MapEntityPass extends AbstractMapEntity implements CompilerPassInterface
             $this->cleanMetadata($driver, [EvrinomaContactExtension::ENTITY]);
 
             $entityGroup = $container->getParameter('evrinoma.contact.entity_group');
-
             if (str_contains($entityGroup, EvrinomaContactExtension::ENTITY)) {
                 $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Group', '%s/Entity/Group');
             }
             $this->addResolveTargetEntity([$entityGroup => [GroupInterface::class => []]], false);
 
             $mapping = $this->getManyToManyRelation();
-            $this->addResolveTargetEntity([$entityGroup => [GroupInterface::class => ['inherited' => true, 'joinTable' => $mapping]]], false);
+            $this->addResolveTargetEntity([$entityGroup => [GroupInterface::class => ['joinTable' => $mapping]]], false);
 
             $entityContact = $container->getParameter('evrinoma.contact.entity_contact');
             if (str_contains($entityContact, EvrinomaContactExtension::ENTITY)) {
