@@ -86,7 +86,7 @@ class ContactFixtures extends AbstractFixture implements FixtureGroupInterface, 
      */
     protected function create(ObjectManager $manager): self
     {
-        $short = self::getReferenceName();
+        $short = static::getReferenceName();
         $shortPhone = PhoneFixtures::getReferenceName();
         $shortMail = MailFixtures::getReferenceName();
         $i = 0;

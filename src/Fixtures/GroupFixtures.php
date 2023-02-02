@@ -105,7 +105,7 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
      */
     protected function create(ObjectManager $manager): self
     {
-        $short = self::getReferenceName();
+        $short = static::getReferenceName();
         $shortContact = ContactFixtures::getReferenceName();
         $shortAddress = AddressFixtures::getReferenceName();
         $i = 0;
