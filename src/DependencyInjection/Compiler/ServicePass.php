@@ -37,7 +37,7 @@ class ServicePass extends AbstractRecursivePass
         if ($servicePreValidator) {
             $servicePreValidator = $container->getParameter('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.services.pre.validator');
             $preValidator = $container->getDefinition($servicePreValidator);
-            $facade = $container->getDefinition('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.contact.facade');
+            $facade = $container->getDefinition('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.facade');
             $facade->setArgument(3, $preValidator);
         }
         $serviceHandler = $container->hasParameter('evrinoma.'.EvrinomaContactBundle::BUNDLE.'.'.$name.'.services.handler');
