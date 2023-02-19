@@ -37,7 +37,7 @@ final class ContactApiControllerTest extends AbstractFunctionalTest
     {
         return [
             FixtureInterface::CONTACT_FIXTURES,
-            FixtureInterface::GROUP_FIXTURES,
+            FixtureInterface::CONTACT_GROUP_FIXTURES,
             AddressFixtureInterface::ADDRESS_FIXTURES,
             PhoneFixtureInterface::PHONE_FIXTURES,
             MailFixtureInterface::MAIL_FIXTURES,

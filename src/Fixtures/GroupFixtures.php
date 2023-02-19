@@ -142,7 +142,7 @@ class GroupFixtures extends AbstractFixture implements FixtureGroupInterface, Or
     public static function getGroups(): array
     {
         return [
-            FixtureInterface::GROUP_FIXTURES,
+            FixtureInterface::CONTACT_GROUP_FIXTURES,
         ];
     }
 

@@ -16,5 +16,5 @@ namespace Evrinoma\ContactBundle\Fixtures;
 interface FixtureInterface
 {
     public const CONTACT_FIXTURES = 'CONTACT_FIXTURES';
-    public const GROUP_FIXTURES = 'GROUP_FIXTURES';
+    public const CONTACT_GROUP_FIXTURES = 'CONTACT_GROUP_FIXTURES';
 }

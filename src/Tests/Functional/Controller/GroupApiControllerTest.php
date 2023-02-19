@@ -36,7 +36,7 @@ final class GroupApiControllerTest extends AbstractFunctionalTest
     public static function getFixtures(): array
     {
         return [
-            FixtureInterface::GROUP_FIXTURES,
+            FixtureInterface::CONTACT_GROUP_FIXTURES,
             FixtureInterface::CONTACT_FIXTURES,
             AddressFixtureInterface::ADDRESS_FIXTURES,
             PhoneFixtureInterface::PHONE_FIXTURES,
