@@ -132,6 +132,7 @@ final class ContactApiController extends AbstractWrappedApiController implements
         try {
             $this->facade->post($contactApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -217,6 +218,7 @@ final class ContactApiController extends AbstractWrappedApiController implements
         try {
             $this->facade->put($contactApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -266,6 +268,7 @@ final class ContactApiController extends AbstractWrappedApiController implements
         try {
             $this->facade->delete($contactApiDto, '', $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -357,6 +360,7 @@ final class ContactApiController extends AbstractWrappedApiController implements
         try {
             $this->facade->criteria($contactApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -405,6 +409,7 @@ final class ContactApiController extends AbstractWrappedApiController implements
         try {
             $this->facade->get($contactApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 

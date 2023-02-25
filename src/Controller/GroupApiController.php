@@ -116,6 +116,7 @@ final class GroupApiController extends AbstractWrappedApiController implements A
         try {
             $this->facade->post($groupApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -185,6 +186,7 @@ final class GroupApiController extends AbstractWrappedApiController implements A
         try {
             $this->facade->put($groupApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -234,6 +236,7 @@ final class GroupApiController extends AbstractWrappedApiController implements A
         try {
             $this->facade->delete($groupApiDto, '', $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -325,6 +328,7 @@ final class GroupApiController extends AbstractWrappedApiController implements A
         try {
             $this->facade->criteria($groupApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
@@ -373,6 +377,7 @@ final class GroupApiController extends AbstractWrappedApiController implements A
         try {
             $this->facade->get($groupApiDto, $group, $json);
         } catch (\Exception $e) {
+            $json = [];
             $error = $this->setRestStatus($e);
         }
 
