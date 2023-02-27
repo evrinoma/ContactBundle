@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 class ContactPass extends AbstractConstraint implements CompilerPassInterface
 {
-    public const CONTACT_CONSTRAINT = 'evrinoma.contact.constraint.contact.property';
+    public const CONTACT_CONSTRAINT = 'evrinoma.contact.constraint.property.contact';
 
     protected static string $alias = self::CONTACT_CONSTRAINT;
     protected static string $class = ContactValidator::class;
